@@ -1,24 +1,64 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import React from 'react';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Stack } from "expo-router";
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
+ 
+    export default function RootLayout() {
+       const colorScheme = useColorScheme();
+  return(
+    <Stack>
+      <Stack.Screen name="index"
+        options={{
+          headerShown: false,
+        }}/>;
+        <Stack.Screen name="register"
+        options={{
+          headerShown: false,
+          
+        }}/>;   
+        <Stack.Screen name="hostelType"
+        options={{
+          headerShown: true,
+          headerTitle: 'Select Hostel Type',
+          headerStyle: { backgroundColor: '#2321c4' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerBackTitleStyle:{ fontSize: 12,  },
+        }}/>;
+        <Stack.Screen name="classic"
+        options={{
+          headerShown: true,
+          headerTitle: 'Select Your Hostel',
+          headerStyle: { backgroundColor: '#2321c4' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerBackTitleStyle:{ fontSize: 12,  },
+        }}/>;
+        <Stack.Screen name="premium"
+        options={{
+          headerShown: true,
+          headerTitle: 'Select Your Hostel',
+          headerStyle: { backgroundColor: '#2321c4' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerBackTitleStyle:{ fontSize: 12,  },
+        }}/>;
+        <Stack.Screen name="regular"
+        options={{
+          headerShown: true,
+          headerTitle: 'Select Your Hostel ',
+          headerStyle: { backgroundColor: '#2321c4' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerBackTitleStyle:{ fontSize: 12,  },
+        }}/>;
 
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
-}
+    </Stack>
+  )
+} 
+
+
+
+
