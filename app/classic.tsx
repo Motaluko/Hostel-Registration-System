@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
-import { Image, Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 
 export default function HostelType(){
   {/*Inside component:*/ } 
@@ -15,13 +15,18 @@ const cardStyle = {
     return(
         
     <ScrollView style={styles.body}>
+      {/* Header */}
+                  <View style={styles.header}>
+                    <Text style={styles.headerTitle}>Select Your Hostel </Text>
+                    <Text style={{color:'#cfcfcf', fontSize:15}}>Available Hostel for students</Text>
+                  </View>
       <View style={styles.container}>
       
       {/*Platinum*/}
        <View style={styles.row}>
         <Link href="/Classic/Platinum/FloorA" asChild>
           <Pressable style={styles.card} >
-            <Image source={require("../assets/images/classic1.png")} style={styles.image} />
+            <Text style={styles.houseEmoji}>🏘️</Text>
             <Text style={styles.name}>Platinum Hall</Text>
             <View style={styles.box}>
                 <Text style={styles.boxText}>Classic</Text>
@@ -37,7 +42,7 @@ const cardStyle = {
         </View>
         <View style={styles.subText} >
             <Text style={styles.label}>Gender: </Text>
-            <Text style={styles.value}>Male</Text>
+            <Text style={styles.value}>Female</Text>
         </View>
         <View style={styles.subText}>
             <Ionicons name="location" size={16}  color="#585757" /> 
@@ -60,7 +65,7 @@ const cardStyle = {
             {/*Crystal*/}
         <Link href="/Classic/Crystal/FloorA" asChild>
           <Pressable style={styles.card}>
-            <Image source={require("../assets/images/classic1.png")} style={styles.image} />
+            <Text style={styles.houseEmoji}>🏘️</Text>
             <Text style={styles.name}>Crystal Hall</Text>
             <View style={styles.box}>
                 <Text style={styles.boxText}>Classic</Text>
@@ -75,7 +80,7 @@ const cardStyle = {
         </View>
         <View style={styles.subText} >
             <Text style={styles.label}>Gender: </Text>
-            <Text style={styles.value}>Male</Text>
+            <Text style={styles.value}>Female</Text>
         </View>
         <View style={styles.subText}>
             <Ionicons name="location" size={16}  color="#585757" /> 
@@ -97,7 +102,7 @@ const cardStyle = {
         {/*Saphhire*/}
         <Link href="/Classic/Sapphire/FloorA" asChild>  
           <Pressable style={styles.card}>
-            <Image source={require("../assets/images/classic1.png")} style={styles.image} />
+           <Text style={styles.houseEmoji}>🏘️</Text>
             <Text style={styles.name}>Saphhire Hall</Text>
             <View style={styles.box}>
                 <Text style={styles.boxText}>Classic</Text>
@@ -111,7 +116,7 @@ const cardStyle = {
         </View>
         <View style={styles.subText} >
             <Text style={styles.label}>Gender: </Text>
-            <Text style={styles.value}>Male</Text>
+            <Text style={styles.value}>Female</Text>
         </View>
         <View style={styles.subText}>
             <Ionicons name="location" size={16}  color="#585757" /> 
@@ -134,7 +139,7 @@ const cardStyle = {
         <Link href="/hostelType" asChild>
            <Pressable
              style={styles.button}>
-              <Text> Back</Text>
+              <Text><Ionicons name="arrow-back" size={16} color="black" /> Back</Text>
            </Pressable>
         </Link>
       </View>
@@ -155,6 +160,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         
     },
+    header: {
+    backgroundColor: "#2321c4", // your blue color
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    alignItems: "flex-start",
+  },
+  headerTitle: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "bold",
+  },
     row: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -180,6 +196,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     },
+     houseEmoji: {
+    fontSize: 70,
+    marginBottom: 16,
+  },
     image: {
     width: 110,
     height: 110,

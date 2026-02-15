@@ -1,20 +1,26 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function HostelType(){
     return(
         
       
     <ScrollView style={styles.body}>
+
+      {/* Header */}
+            <View style={styles.header}>
+              <Text style={styles.headerTitle}>Select Hostel Type</Text>
+              <Text style={{color:'#cfcfcf', fontSize:15}}>Choose the type of accomodation that suits you best</Text>
+            </View>
+
       <View style={styles.container}>
-      
       {/*Classic*/}
        <View style={styles.row}>
         <Link href="/classic" asChild>
           <Pressable style={styles.card} >
-            <Image source={require("../assets/images/classic1.png")} style={styles.image} />
+           <Text style={styles.houseEmoji}>🏘️</Text>
             <Text style={styles.name}>Classic</Text>
             <Text style={styles.num}><Ionicons name="people-outline" size={27}  color={"#2321c4"} style={{textAlign: 'center', marginTop: 10}}/> 4</Text>
             <Text style={styles.sub}>4 students per room</Text>
@@ -24,8 +30,8 @@ export default function HostelType(){
              </View>
         <View>
             <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Shared facilities</Text>
-            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Shared facilities</Text>
-            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Shared facilities</Text>
+            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> 24/7 security</Text>
+            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Wi-Fi enabled</Text>
         </View>
 
           </Pressable>
@@ -36,7 +42,7 @@ export default function HostelType(){
             {/*Premium*/}
         <Link href="/premium" asChild>
           <Pressable style={styles.card}>
-            <Image source={require("../assets/images/premium1.png")} style={styles.image} />
+            <Text style={styles.houseEmoji}>🏡</Text>
             <Text style={styles.name}>Premium</Text>
             <Text style={styles.num}><Ionicons name="people-outline" size={27}  color={"#2321c4"} style={{textAlign: 'center', marginTop: 10}}/> 5</Text>
             <Text style={styles.sub}>5 students per room</Text>
@@ -46,8 +52,8 @@ export default function HostelType(){
              </View>
         <View>
             <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Shared facilities</Text>
-            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Shared facilities</Text>
-            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Shared facilities</Text>
+            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> 24/7 security</Text>
+            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Wi-Fi enabled</Text>
         </View>
 
           </Pressable>
@@ -57,7 +63,7 @@ export default function HostelType(){
         {/*Regular*/}
         <Link href="/regular" asChild>  
           <Pressable style={styles.card}>
-            <Image source={require("../assets/images/regular1.png")} style={styles.image} />
+            <Text style={styles.houseEmoji}>🏠</Text>
             <Text style={styles.name}>Regular</Text>
             <Text style={styles.num}><Ionicons name="people-outline" size={27}  color={"#2321c4"} style={{textAlign: 'center', marginTop: 10}}/> 6</Text>
             <Text style={styles.sub}>6 students per room</Text>
@@ -67,8 +73,8 @@ export default function HostelType(){
              </View>
         <View>
             <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Shared facilities</Text>
-            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Shared facilities</Text>
-            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Shared facilities</Text>
+            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> 24/7 security</Text>
+            <Text style={{color:'#a39f9f'}}><Ionicons name="checkmark-outline" size={20}  color={"#0bb845"} /> Wi-Fi enabled</Text>
         </View>
 
           </Pressable>
@@ -79,7 +85,7 @@ export default function HostelType(){
         <Link href="/" asChild>
            <Pressable
              style={styles.button}>
-              <Text> Back</Text>
+              <Text><Ionicons name="arrow-back" size={20} color="#020208" /> Back</Text>
            </Pressable>
         </Link>
       </View>
@@ -100,6 +106,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         
     },
+    header: {
+    backgroundColor: "#2321c4", // your blue color
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    alignItems: "flex-start",
+  },
+  headerTitle: {
+    color: "white",
+    fontSize: 22,
+    fontWeight: "bold",
+  },
     num:{
         fontSize: 32,
     fontWeight: "bold",
@@ -124,6 +141,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     gap:20,
+    
     marginVertical: 20,
   },
   card: {
@@ -140,10 +158,9 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
         
   },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 35,
+  houseEmoji: {
+    fontSize: 70,
+    marginBottom: 16,
   },
   name: {
     marginTop: 6,

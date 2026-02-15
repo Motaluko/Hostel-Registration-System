@@ -1,7 +1,8 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, TextInput, View, } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
   const [firstname, setFirstname] = useState('');
@@ -20,7 +21,7 @@ export default function App() {
    
 
   return (
-   <View style={styles.body}>
+   <SafeAreaView style={styles.body}>
     
     <View style={styles.container}>
       <View style={styles.header}>
@@ -106,7 +107,7 @@ export default function App() {
             </Pressable>
            
     </View>
-  </View>  
+  </SafeAreaView>  
   );
 }
 

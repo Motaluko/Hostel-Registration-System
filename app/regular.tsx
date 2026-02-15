@@ -1,45 +1,58 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, useWindowDimensions, View } from "react-native";
 
 export default function HostelType(){
+  {/*Inside component:*/ } 
+const { width } = useWindowDimensions();
+
+const cardStyle = {
+  ...styles.card,
+  width: width < 600 ? '100%' : '45%',   // or '30%' for 3 columns
+  fontSize: width < 400 ? 18 : 22, // Adjust font size based on screen width
+};
     return(
         
-      
     <ScrollView style={styles.body}>
+      {/* Header */}
+                  <View style={styles.header}>
+                    <Text style={styles.headerTitle}>Select Your Hostel </Text>
+                    <Text style={{color:'#cfcfcf', fontSize:15}}>Available Hostel for students</Text>
+                  </View>
       <View style={styles.container}>
       
-      {/*Classic*/}
+      {/*Platinum*/}
        <View style={styles.row}>
         <Link href="/Regular/Nyberg/FloorA" asChild>
           <Pressable style={styles.card} >
-            <Image source={require("../assets/images/regular1.png")} style={styles.image} />
+            <Text style={styles.houseEmoji}>🏠</Text>
             <Text style={styles.name}>Nyberg Hall</Text>
             <View style={styles.box}>
                 <Text style={styles.boxText}>Regular</Text>
             </View>
            
-           <View > 
+           <View  style={styles.hrContainer}> 
                 <Text style={styles.hr}>_______________________________________________________</Text>
              </View>
          
         <View style={styles.subText}>
-            <Text style={{color:'#585757'}}>Capacity: </Text>
-            <Text style={{fontWeight:'bold'}}>6 students/room</Text>
+            <Text style={styles.label}>Capacity: </Text>
+            <Text style={styles.value}>6 students/room</Text>
         </View>
-        <View style={styles.subText1} >
-            <Text style={{color:'#585757'}}>Gender: </Text>
-            <Text style={{fontWeight:'bold'}}>Male</Text>
+        <View style={styles.subText} >
+            <Text style={styles.label}>Gender: </Text>
+            <Text style={styles.value}>Female</Text>
         </View>
-        <View style={styles.subText2}>
-            <Text style={{color:'#585757'}}><Ionicons name="location" size={16}  color={"#585757"} style={{textAlign: 'center', marginTop: 10}}/>  Main Campus </Text>
+        <View style={styles.subText}>
+            <Ionicons name="location" size={16}  color="#585757" /> 
+            <Text style={styles.value}> Main Campus </Text>
         </View>
-        <View > 
+        <View style={styles.hrContainer}> 
                 <Text style={styles.hr}>_______________________________________________________</Text>
         </View>
-        <View style={styles.subTextAv} >
-            <Text style={{color:'#585757'}}>Availabilty: </Text>
+        <View style={styles.subText} >
+            <Text style={styles.label}>Availabilty: </Text>
             <View style={styles.box1}>
                 <Text style={styles.boxText1}>Available</Text>
             </View>
@@ -49,34 +62,35 @@ export default function HostelType(){
         
 
 
-            {/*Premium*/}
+            {/*Crystal*/}
         <Link href="/Regular/Ogden/FloorA" asChild>
           <Pressable style={styles.card}>
-            <Image source={require("../assets/images/regular1.png")} style={styles.image} />
+            <Text style={styles.houseEmoji}>🏠</Text>
             <Text style={styles.name}>Ogden Hall</Text>
             <View style={styles.box}>
                 <Text style={styles.boxText}>Regular</Text>
             </View>
 
-             <View > 
+             <View style={styles.hrContainer}> 
                 <Text style={styles.hr}>_______________________________________________________</Text>
              </View>
         <View style={styles.subText}>
-            <Text style={{color:'#585757'}}>Capacity: </Text>
-            <Text style={{fontWeight:'bold'}}>6 students/room</Text>
+            <Text style={styles.label}>Capacity: </Text>
+            <Text style={styles.value}>6 students/room</Text>
         </View>
-        <View style={styles.subText1} >
-            <Text style={{color:'#585757'}}>Gender: </Text>
-            <Text style={{fontWeight:'bold'}}>Male</Text>
+        <View style={styles.subText} >
+            <Text style={styles.label}>Gender: </Text>
+            <Text style={styles.value}>Female</Text>
         </View>
-        <View style={styles.subText2}>
-            <Text style={{color:'#585757'}}><Ionicons name="location" size={16}  color={"#585757"} style={{textAlign: 'center', marginTop: 10}}/>  Main Campus </Text>
+        <View style={styles.subText}>
+            <Ionicons name="location" size={16}  color="#585757" /> 
+            <Text style={styles.value}> Main Campus </Text>
         </View>
-        <View > 
+        <View style={styles.hrContainer}> 
                 <Text style={styles.hr}>_______________________________________________________</Text>
         </View>
-        <View style={styles.subTextAv} >
-            <Text style={{color:'#585757'}}>Availabilty: </Text>
+        <View style={styles.subText} >
+            <Text style={styles.label}>Availabilty: </Text>
             <View style={styles.box1}>
                 <Text style={styles.boxText1}>Available</Text>
             </View>
@@ -85,33 +99,34 @@ export default function HostelType(){
         </Link>
        
 
-        {/*Regular*/}
+        {/*Saphhire*/}
         <Link href="/Regular/White/FloorA" asChild>  
           <Pressable style={styles.card}>
-            <Image source={require("../assets/images/regular1.png")} style={styles.image} />
+           <Text style={styles.houseEmoji}>🏠</Text>
             <Text style={styles.name}>White Hall</Text>
             <View style={styles.box}>
                 <Text style={styles.boxText}>Regular</Text>
             </View>
-             <View > 
+             <View style={styles.hrContainer}> 
                 <Text style={styles.hr}>_______________________________________________________</Text>
              </View>
         <View style={styles.subText}>
-            <Text style={{color:'#585757'}}>Capacity: </Text>
-            <Text style={{fontWeight:'bold'}}>6 students/room</Text>
+            <Text style={styles.label}>Capacity: </Text>
+            <Text style={styles.value}>6 students/room</Text>
         </View>
-        <View style={styles.subText1} >
-            <Text style={{color:'#585757'}}>Gender: </Text>
-            <Text style={{fontWeight:'bold'}}>Male</Text>
+        <View style={styles.subText} >
+            <Text style={styles.label}>Gender: </Text>
+            <Text style={styles.value}>Female</Text>
         </View>
-        <View style={styles.subText2}>
-            <Text style={{color:'#585757'}}><Ionicons name="location" size={16}  color={"#585757"} style={{textAlign: 'center', marginTop: 10}}/>  Main Campus </Text>
+        <View style={styles.subText}>
+            <Ionicons name="location" size={16}  color="#585757" /> 
+            <Text style={styles.value}> Main Campus </Text>
         </View>
-        <View > 
+        <View style={styles.hrContainer}> 
                 <Text style={styles.hr}>_______________________________________________________</Text>
         </View>
-        <View style={styles.subTextAv} >
-            <Text style={{color:'#585757'}}>Availabilty: </Text>
+        <View style={styles.subText} >
+            <Text style={styles.label}>Availabilty: </Text>
             <View style={styles.box1}>
                 <Text style={styles.boxText1}>Available</Text>
             </View>
@@ -124,7 +139,7 @@ export default function HostelType(){
         <Link href="/hostelType" asChild>
            <Pressable
              style={styles.button}>
-              <Text> Back</Text>
+              <Text><Ionicons name="arrow-back" size={20} color="#020208" />  Back</Text>
            </Pressable>
         </Link>
       </View>
@@ -137,7 +152,7 @@ export default function HostelType(){
 const styles = StyleSheet.create({
     body:{
         flex: 1,
-    backgroundColor: "#e1eefc"
+        backgroundColor: "#e1eefc"
     },
     container:{
         flex: 1,
@@ -145,107 +160,98 @@ const styles = StyleSheet.create({
         alignItems: "center",
         
     },
-    num:{
-        fontSize: 32,
+    header: {
+    backgroundColor: "#2321c4", // your blue color
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    alignItems: "flex-start",
+  },
+  headerTitle: {
+    color: "white",
+    fontSize: 22,
     fontWeight: "bold",
-    color: "#2321c4",
-    },
-    sub:{
-        fontSize: 14,
-    color: "#777",
-    textAlign: "center"
-    },
-    button:{
-        borderWidth: 1,
-        borderColor: "#ccc",
-        backgroundColor: "#fff",
-        paddingVertical: 14,
-        paddingHorizontal: 32,
-        borderRadius: 12,
-        marginTop: 16,
-    },
-   row: {
+  },
+    row: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    gap:20,
+    gap:16,
     marginVertical: 20,
   },
-  card: {
-    flex: 1,
-    width: 400,
+    num:{
+       fontSize: 32,
+       fontWeight: "bold",
+       color: "#2321c4",
+    },
+    card: {
+    maxWidth:360,
+    minWidth:300,  
+    width: "100%",
     height: 500,
     backgroundColor: "#fff",
     marginHorizontal: 8,
     alignItems: "center",
-    justifyContent: "center",
     borderRadius: 16,
     padding: 12,
     borderWidth: 1,
     borderColor: "#ccc",
-        
+    },
+     houseEmoji: {
+    fontSize: 70,
+    marginBottom: 16,
   },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 35,
-  },
-  name: {
-    marginTop: 6,
-    padding:8,
+    image: {
+    width: 110,
+    height: 110,
+    borderRadius: 55,
+    marginBottom: 12,
+    },
+    name: {
+    marginBottom: 6,
     fontWeight: "bold",
+    fontSize:18,
     color: "#333",
-  },
-  icon: {
-    marginVertical: 6,
-  },
-  hr:{
-    color:'#ccc',
-    padding:10,
-  },
-  box:{
+    },
+    box:{
      borderWidth: 1,
      borderColor: "#b5d1fa",
      backgroundColor:'#b5d1fa',
      borderRadius: 8,
-     padding: 8,
-     marginVertical: 10,
+     paddingVertical:6,
+     paddingHorizontal: 12,
+     marginBottom: 12,
+    },
+    boxText:{
+      color:'#2321c4',
+      fontSize:12,
+      fontWeight: "bold",
+    },
+     hr:{
+    color:'#ccc',
+    fontSize:10,
   },
-  boxText:{
-    color:'#2321c4',
-    fontSize:12,
-    fontWeight: "bold",
+  hrContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginVertical: 8,
   },
+  
   subText:{
     flexDirection: "row",
-    gap: 155,
-     marginTop: 8,
-     color:'#a39f9f',
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    marginVertical: 4,
   },
-  subText1:{
-    flexDirection: "row",
-    gap: 240,
-     marginTop: 8,
-     color:'#a39f9f',
+  label: {
+    color: "#585757",
+    fontSize: 14,
   },
-  subText2:{
-    flexDirection: "row",
-    alignSelf:'flex-start',
-    marginLeft: 22,
-    marginTop: 8,
-    color:'#a39f9f',
-  },
-  subTextAv:{
-    flexDirection: "row",
-    gap: 190,
-     marginTop: 8,
-     color:'#a39f9f',
-  },
-   boxText1:{
-    color:'#0c9c48',
-    fontSize:12,
+  value: {
     fontWeight: "bold",
-  },  
+    color: "#333",
+    fontSize: 14,
+  },
   box1:{
      borderWidth: 1,
      borderColor: "#b5fada",
@@ -254,4 +260,20 @@ const styles = StyleSheet.create({
      padding: 8,
      marginVertical: 10,
   },
+  boxText1:{
+    color:'#0c9c48',
+    fontSize:12,
+    fontWeight: "bold",
+  },  
+  button:{
+      borderWidth: 1,
+      borderColor: "#ccc",
+      backgroundColor: "#fff",
+      paddingVertical: 14,
+      paddingHorizontal: 40,
+      borderRadius: 12,
+      marginTop: 24,
+      marginBottom: 32,
+    },
+
 })

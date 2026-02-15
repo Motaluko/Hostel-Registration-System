@@ -20,7 +20,7 @@ import { Stack } from "expo-router";
         }}/>;   
         <Stack.Screen name="hostelType"
         options={{
-          headerShown: true,
+          headerShown: false,
           headerTitle: 'Select Hostel Type',
           headerStyle: { backgroundColor: '#2321c4' },
           headerTintColor: '#fff',
@@ -29,7 +29,7 @@ import { Stack } from "expo-router";
         }}/>;
         <Stack.Screen name="classic"
         options={{
-          headerShown: true,
+          headerShown: false,
           headerTitle: 'Select Your Hostel',
           headerStyle: { backgroundColor: '#2321c4' },
           headerTintColor: '#fff',
@@ -38,7 +38,7 @@ import { Stack } from "expo-router";
         }}/>;
         <Stack.Screen name="premium"
         options={{
-          headerShown: true,
+          headerShown: false,
           headerTitle: 'Select Your Hostel',
           headerStyle: { backgroundColor: '#2321c4' },
           headerTintColor: '#fff',
@@ -47,13 +47,23 @@ import { Stack } from "expo-router";
         }}/>;
         <Stack.Screen name="regular"
         options={{
-          headerShown: true,
+          headerShown: false,
           headerTitle: 'Select Your Hostel ',
           headerStyle: { backgroundColor: '#2321c4' },
           headerTintColor: '#fff',
           headerTitleStyle: { fontWeight: 'bold' },
           headerBackTitleStyle:{ fontSize: 12,  },
         }}/>;
+         <Stack.Screen name="Classic/Platinum/FloorA"
+        options={{
+          headerShown: false,
+          headerTitle: 'Select Your Hostel ',
+          headerStyle: { backgroundColor: '#2321c4' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { fontWeight: 'bold' },
+          headerBackTitleStyle:{ fontSize: 12,  },
+        }}/>;
+
 
     </Stack>
   )
