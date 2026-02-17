@@ -69,6 +69,14 @@ export default function App() {
               </Link>
             </View>
           </View>
+
+          <View style={styles.hrContainer}> 
+                          <Text style={styles.hr}>______________________________________________________________</Text>
+          </View>
+
+          <View style={styles.bottom}>
+            <Text style={styles.bottomText}>Secure . Safe . Relialble</Text>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -89,11 +97,11 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     padding: 24,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     width: '80%',
     borderWidth: 1,
     borderRadius: 16,
-    borderColor: '#ccc9c9',
+    borderColor: '#abc2f3',
     shadowColor: '#646262',
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.15,
@@ -152,6 +160,24 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
+    marginBottom:12,
   },
+  hr:{
+    color:'#ccc',
+    fontSize:10,
+  },
+  hrContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginVertical: 8,
+  },
+  bottom:{
+    alignItems:'center',
+  },
+  bottomText:{
+    color:'#ccc',
+
+  }
+
   
 });

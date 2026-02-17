@@ -22,7 +22,7 @@ export default function HostelType(){
            
 <View style={styles.row}>
   {['A', 'B', 'C', 'D'].map((floor) => (
-    <Link
+   <Link
   href={`/Classic/Platinum/Floor${floor}` as Href}
   asChild
   key={floor}
@@ -104,8 +104,6 @@ export default function HostelType(){
                        <Text>10</Text>
                        <Text style={{color:'white',fontSize:14}}><Ionicons name="people-outline" size={16} color="white" /> 0/4</Text>
                     </Pressable>
-                </View>
-                <View style={styles.rooms}> {/*Row 2*/}
                     <Pressable style={styles.box}>
                        <Text>11</Text>
                        <Text style={{color:'white',fontSize:14}}><Ionicons name="people-outline" size={16} color="white" /> 0/4</Text>
@@ -146,8 +144,6 @@ export default function HostelType(){
                        <Text>20</Text>
                        <Text style={{color:'white',fontSize:14}}><Ionicons name="people-outline" size={16} color="white" /> 0/4</Text>
                     </Pressable>
-                </View>
-                <View style={styles.rooms}> {/*Row 3*/}
                     <Pressable style={styles.box}>
                        <Text>21</Text>
                        <Text style={{color:'white',fontSize:14}}><Ionicons name="people-outline" size={16} color="white" /> 0/4</Text>
@@ -221,14 +217,14 @@ export default function HostelType(){
              <View style={styles.toggleContainer}>
                      <Link href="/classic" asChild>
                         <Pressable
-                          style={[styles.toggleButton, styles.toggleActive]}>
+                          style={{...styles.toggleButton, ...styles.toggleActive}}>
                            <Text><Ionicons name="arrow-back" size={16} color="black" /> Back</Text>
                         </Pressable> 
                         </Link>
                         <Link href="/CardPayment" asChild>
                         <Pressable
-                          style={[styles.toggleButton, styles.toggleInActive]}>
-                           <Text><Ionicons name="arrow-forward" size={16} color="black" /> Next</Text>
+                          style={{...styles.toggleButton, ...styles.toggleInActive}}>
+                           <Text style={{color:'white'}}><Ionicons name="arrow-forward" size={16} color="white" /> Next</Text>
                         </Pressable>
                         </Link>
              </View>
@@ -354,7 +350,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 4,
     marginBottom: 24,
-    justifyContent:'space-between'
+    gap:8
   },
   toggleButton: {
     flex: 1,
@@ -365,6 +361,8 @@ const styles = StyleSheet.create({
   },
   toggleActive: {
    borderWidth:1,
+   borderColor:'#ccc',
+   backgroundColor:'#ccc'
    
   },
   toggleInActive: {

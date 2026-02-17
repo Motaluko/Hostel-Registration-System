@@ -1,14 +1,21 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 
 export default function HostelType(){
+  {/*Inside component:*/ } 
+const { width } = useWindowDimensions();
+
+const cardStyle = {
+  ...styles.card,
+  width: width < 600 ? '100%' : '45%',   // or '30%' for 3 columns
+  fontSize: width < 400 ? 18 : 22, // Adjust font size based on screen width
+};
+
     return(
         
-      
     <ScrollView style={styles.body}>
-
       {/* Header */}
             <View style={styles.header}>
               <Text style={styles.headerTitle}>Select Hostel Type</Text>
@@ -25,7 +32,7 @@ export default function HostelType(){
             <Text style={styles.num}><Ionicons name="people-outline" size={27}  color={"#2321c4"} style={{textAlign: 'center', marginTop: 10}}/> 4</Text>
             <Text style={styles.sub}>4 students per room</Text>
            
-           <View > 
+           <View  style={styles.hrContainer}> 
                 <Text style={styles.hr}>___________________________________________</Text>
              </View>
         <View>
@@ -47,7 +54,7 @@ export default function HostelType(){
             <Text style={styles.num}><Ionicons name="people-outline" size={27}  color={"#2321c4"} style={{textAlign: 'center', marginTop: 10}}/> 5</Text>
             <Text style={styles.sub}>5 students per room</Text>
 
-             <View > 
+             <View  style={styles.hrContainer}> 
                 <Text style={styles.hr}>___________________________________________</Text>
              </View>
         <View>
@@ -68,7 +75,7 @@ export default function HostelType(){
             <Text style={styles.num}><Ionicons name="people-outline" size={27}  color={"#2321c4"} style={{textAlign: 'center', marginTop: 10}}/> 6</Text>
             <Text style={styles.sub}>6 students per room</Text>
 
-             <View > 
+             <View style={styles.hrContainer}> 
                 <Text style={styles.hr}>___________________________________________</Text>
              </View>
         <View>
@@ -107,7 +114,7 @@ const styles = StyleSheet.create({
         
     },
     header: {
-    backgroundColor: "#2321c4", // your blue color
+    backgroundColor: "#2321c4", 
     paddingVertical: 16,
     paddingHorizontal: 20,
     alignItems: "flex-start",
@@ -132,26 +139,26 @@ const styles = StyleSheet.create({
         borderColor: "#ccc",
         backgroundColor: "#fff",
         paddingVertical: 14,
-        paddingHorizontal: 32,
+        paddingHorizontal: 40,
         borderRadius: 12,
-        marginTop: 16,
+        marginTop: 24,
+       
     },
    row: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-    gap:20,
-    
+    gap:16,
     marginVertical: 20,
   },
   card: {
-    flex: 1,
-    width: 400,
+    maxWidth: 360,
+    minWidth:300,  
+    width: "100%",
     height: 500,
     backgroundColor: "#fff",
     marginHorizontal: 8,
     alignItems: "center",
-    justifyContent: "center",
     borderRadius: 16,
     padding: 12,
     borderWidth: 1,
@@ -173,6 +180,10 @@ const styles = StyleSheet.create({
   hr:{
     color:'#ccc',
     padding:10,
-  }
-
+  },
+   hrContainer: {
+    width: "100%",
+    alignItems: "center",
+    marginVertical: 8,
+  },
 })

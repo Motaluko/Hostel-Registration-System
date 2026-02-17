@@ -1,71 +1,220 @@
-import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
-import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Ionicons } from '@expo/vector-icons';
+import { Link, type Href } from "expo-router";
+import React, { useState } from "react";
+import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, } from "react-native";
+
+type Room = {
+  number: string;
+  occupancy: string; // "0/4", "1/4", "2/4", "3/4", "4/4"
+  status: "empty" | "partial" | "full";
+};
 
 export default function HostelType() {
-  const types = [
-    { title: "Classic", capacity: "4", perRoom: "4 students per room" },
-    { title: "Premium", capacity: "5", perRoom: "5 students per room" },
-    { title: "Regular", capacity: "6", perRoom: "6 students per room" },
-  ];
+  const { width } = useWindowDimensions();
+  const isSmallScreen = width < 400;
+
+  const [selectedFloor, setSelectedFloor] = useState<string | null>(null);
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+
+  // Mock data – replace with real backend fetch later
+  const mockRooms: Room[] = Array.from({ length: 30 }, (_, i) => {
+    const num = (i + 1).toString();
+    let occupancy = "0/4";
+    let status: Room["status"] = "empty";
+
+    // Demo variation – replace with real data from API
+    if (i % 7 === 0) {
+      occupancy = "4/4";
+      status = "full";
+    } else if (i % 5 === 0) {
+      occupancy = "2/4";
+      status = "partial";
+    } else if (i % 11 === 0) {
+      occupancy = "3/4";
+      status = "partial";
+    }
+
+    return { number: num, occupancy, status };
+  });
+
+  const getRoomBoxStyle = (status: Room["status"]) => {
+    switch (status) {
+      case "empty":
+        return styles.roomBoxEmpty;
+      case "partial":
+        return styles.roomBoxPartial;
+      case "full":
+        return styles.roomBoxFull;
+      default:
+        return styles.roomBoxEmpty;
+    }
+  };
+
+  const getStatusText = (status: Room["status"]) => {
+    switch (status) {
+      case "empty": return "Available";
+      case "partial": return "Partially Full";
+      case "full": return "Full";
+      default: return "-";
+    }
+  };
 
   return (
     <ScrollView style={styles.body}>
       {/* Header */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Select Hostel Type</Text>
+        <Text style={styles.headerTitle}>Select Your Room</Text>
+        <Text style={styles.headerSubtitle}>
+          Platinum Hall - 4 students per room
+        </Text>
       </View>
 
-      {/* Cards in horizontal row */}
-      <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.cardsContainer}
-      >
-        {types.map((type, index) => (
-          <Pressable
-            key={type.title}
-            style={styles.card}
-            onPress={() => {
-              // Add navigation here, e.g. router.push(`/hostels/${type.title.toLowerCase()}`)
-              console.log(`Selected ${type.title}`);
-            }}
-          >
-            {/* House emoji (replace with real images later) */}
-            <Text style={styles.houseEmoji}>
-              {index === 0 ? "🏠" : index === 1 ? "🏡" : "🏘️"}
-            </Text>
+      {/* Select Floor */}
+      <View style={styles.card}>
+        <Text style={styles.sectionTitle}>Select Floor</Text>
 
-            <Text style={styles.cardTitle}>{type.title}</Text>
+        <View style={[styles.floorRow, isSmallScreen && { gap: 12 }]}>
+          {["A", "B", "C", "D"].map((floor) => (
+            <Link
+              key={floor}
+              href={`/Classic/Platinum/Floor${floor}` as Href}
+              asChild
+            >
+             <Pressable
+  style={{
+    ...styles.floorButton,
+    ...(selectedFloor === floor ? styles.floorButtonSelected : {}),
+  }}
+  onPress={() => setSelectedFloor(floor)}
+>
+  <Text
+    style={{
+      ...styles.floorButtonText,
+      ...(selectedFloor === floor ? styles.floorButtonTextSelected : {}),
+    }}
+  >
+                  Floor {floor}
+                </Text>
+              </Pressable>
+            </Link>
+          ))}
+        </View>
+      </View>
 
-            <View style={styles.capacityRow}>
-              <Ionicons name="people-outline" size={24} color="#2321c4" />
-              <Text style={styles.capacityNumber}>{type.capacity}</Text>
+      {/* Room Availability Legend */}
+      <View style={styles.card}>
+        <Text style={styles.sectionTitle}>Room Availability</Text>
+        <View style={styles.colorCode}>
+          <View style={styles.legendItem}>
+            <Ionicons name="square" size={16} color="#05b339" />
+            <Text style={styles.legendText}> Available (Empty)</Text>
+          </View>
+          <View style={styles.legendItem}>
+            <Ionicons name="square" size={16} color="#f5b800" />
+            <Text style={styles.legendText}> Partially Full</Text>
+          </View>
+          <View style={styles.legendItem}>
+            <Ionicons name="square" size={16} color="#9b9797" />
+            <Text style={styles.legendText}> Full</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Example: Floor A Rooms */}
+      <View style={styles.card}>
+        <Text style={styles.sectionTitle}>Floor A - Rooms (1-30)</Text>
+
+        <View style={styles.roomsGrid}>
+          {mockRooms.map((room) => (
+            <Pressable
+              key={room.number}
+              style={[
+                styles.roomBox,
+                getRoomBoxStyle(room.status),
+                selectedRoom?.number === room.number && styles.roomBoxSelected,
+              ]}
+              onPress={() => setSelectedRoom(room)}
+            >
+              <Text style={styles.roomNumber}>{room.number}</Text>
+              <View style={styles.occupancyRow}>
+                <Ionicons name="people-outline" size={16} color="white" />
+                <Text style={styles.occupancyText}>{room.occupancy}</Text>
+              </View>
+            </Pressable>
+          ))}
+        </View>
+      </View>
+
+      {/* Selected Room Details */}
+      <View style={styles.card}>
+        <Text style={styles.sectionTitle}>Selected Room Details</Text>
+
+        {selectedRoom ? (
+          <View style={styles.detailsGrid}>
+            <View style={styles.detailItem}>
+              <Text style={styles.detailLabel}>Room Number</Text>
+              <Text style={styles.detailValue}>{selectedRoom.number}</Text>
             </View>
 
-            <Text style={styles.perRoom}>{type.perRoom}</Text>
-
-            <View style={styles.divider} />
-
-            <View style={styles.features}>
-              {["Shared facilities", "Shared facilities", "Shared facilities"].map((item, i) => (
-                <View key={i} style={styles.featureRow}>
-                  <Text style={styles.check}>✓</Text>
-                  <Text style={styles.featureText}>{item}</Text>
-                </View>
-              ))}
+            <View style={styles.detailItem}>
+              <Text style={styles.detailLabel}>Occupancy</Text>
+              <Text style={styles.detailValue}>{selectedRoom.occupancy}</Text>
             </View>
+
+            <View style={styles.detailItem}>
+              <Text style={styles.detailLabel}>Floor</Text>
+              <Text style={styles.detailValue}>{selectedFloor ?? "-"}</Text>
+            </View>
+
+            <View style={styles.detailItem}>
+              <Text style={styles.detailLabel}>Status</Text>
+              <View
+                style={[
+                  styles.statusBox,
+                  selectedRoom.status === "empty" && styles.statusAvailable,
+                  selectedRoom.status === "partial" && styles.statusPartial,
+                  selectedRoom.status === "full" && styles.statusFull,
+                ]}
+              >
+                <Text style={styles.statusBoxText}>
+                  {getStatusText(selectedRoom.status)}
+                </Text>
+              </View>
+            </View>
+          </View>
+        ) : (
+          <Text style={styles.noSelectionText}>
+            No room selected yet
+          </Text>
+        )}
+      </View>
+
+      {/* Bottom Buttons */}
+      <View style={styles.buttonRow}>
+        <Link href="/classic" asChild>
+          <Pressable style={[styles.actionButton, styles.backButton]}>
+            <Ionicons name="arrow-back" size={18} color="#333" />
+            <Text style={styles.backButtonText}> Back</Text>
           </Pressable>
-        ))}
-      </ScrollView>
+        </Link>
 
-      {/* Back Button */}
-      <Link href=".." asChild>
-        <Pressable style={styles.backButton}>
-          <Text style={styles.backText}>Back</Text>
-        </Pressable>
-      </Link>
+        <Link href="/CardPayment" asChild>
+          <Pressable
+            style={[
+              styles.actionButton,
+              styles.nextButton,
+              !selectedRoom && styles.nextButtonDisabled,
+            ]}
+            disabled={!selectedRoom}
+          >
+            <Text style={styles.nextButtonText}>
+              Next <Ionicons name="arrow-forward" size={18} color="white" />
+            </Text>
+          </Pressable>
+        </Link>
+      </View>
+
+      <View style={{ height: 60 }} />
     </ScrollView>
   );
 }
@@ -75,102 +224,236 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#e1eefc",
   },
+
   header: {
-    backgroundColor: "#2321c4", // your blue color
-    paddingVertical: 16,
+    backgroundColor: "#2321c4",
+    paddingVertical: 20,
     paddingHorizontal: 20,
-    alignItems: "center",
+    paddingBottom: 24,
   },
   headerTitle: {
     color: "white",
-    fontSize: 22,
-    fontWeight: "bold",
+    fontSize: 24,
+    fontWeight: "700",
   },
-  cardsContainer: {
-    flexDirection: "row",
-    alignItems: "center",      // makes cards same height
-    paddingHorizontal: 16,
-    paddingVertical: 24,
-    gap: 16,                    // space between cards
+  headerSubtitle: {
+    color: "#e0e0ff",
+    fontSize: 15,
+    marginTop: 6,
   },
+
   card: {
-    flex: 1,                    // share width equally
-    minWidth: 260,              // prevent too narrow on small screens
-    backgroundColor: "white",
+    backgroundColor: "#ffffff",
+    marginHorizontal: 12,
+    marginVertical: 8,
     borderRadius: 16,
     padding: 20,
-    alignItems: "center",
-    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+    elevation: 3,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
+    shadowRadius: 6,
   },
-  houseEmoji: {
-    fontSize: 70,
+
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "700",
     marginBottom: 16,
+    color: "#111",
   },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#2321c4",
-    marginBottom: 8,
+
+  floorRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 16,
+    justifyContent: "center",
   },
-  capacityRow: {
+
+  floorButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 28,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: "#d0d0d0",
+    backgroundColor: "#fff",
+    minWidth: 100,
+    alignItems: "center",
+  },
+  floorButtonSelected: {
+    borderColor: "#4f9be2",
+    backgroundColor: "#e6f3ff",
+  },
+  floorButtonText: {
+    fontSize: 16,
+    color: "#444",
+  },
+  floorButtonTextSelected: {
+    fontWeight: "600",
+    color: "#1e60aa",
+  },
+
+  colorCode: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 16,
+    justifyContent: "center",
+  },
+  legendItem: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 4,
+    gap: 6,
   },
-  capacityNumber: {
-    fontSize: 36,
-    fontWeight: "bold",
-    color: "#2321c4",
-    marginLeft: 8,
-  },
-  perRoom: {
+  legendText: {
     fontSize: 14,
     color: "#555",
-    marginBottom: 16,
   },
-  divider: {
-    width: "80%",
-    height: 1,
-    backgroundColor: "#ddd",
-    marginVertical: 12,
+
+  roomsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 10,
+    justifyContent: "space-evenly",
   },
-  features: {
-    width: "100%",
-    alignItems: "flex-start",
+
+  roomBox: {
+    width: 68,
+    height: 68,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1.5,
   },
-  featureRow: {
+  roomBoxEmpty: {
+    backgroundColor: "#05b339",
+    borderColor: "#046822",
+  },
+  roomBoxPartial: {
+    backgroundColor: "#f5b800",
+    borderColor: "#c79800",
+  },
+  roomBoxFull: {
+    backgroundColor: "#9b9797",
+    borderColor: "#777777",
+  },
+  roomBoxSelected: {
+    borderWidth: 3.5,
+    borderColor: "#2563eb",
+    elevation: 6,
+    shadowColor: "#2563eb",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.35,
+    shadowRadius: 8,
+  },
+
+  roomNumber: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  occupancyRow: {
     flexDirection: "row",
     alignItems: "center",
-    marginVertical: 4,
+    gap: 4,
+    marginTop: 4,
   },
-  check: {
-    color: "#4CAF50",
-    fontSize: 20,
-    fontWeight: "bold",
-    marginRight: 10,
+  occupancyText: {
+    color: "white",
+    fontSize: 13,
+    fontWeight: "500",
   },
-  featureText: {
+
+  detailsGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 20,
+    justifyContent: "space-between",
+  },
+  detailItem: {
+    flex: 1,
+    minWidth: 120,
+  },
+  detailLabel: {
+    color: "#666",
     fontSize: 14,
-    color: "#333",
+  },
+  detailValue: {
+    fontSize: 17,
+    fontWeight: "600",
+    color: "#111",
+    marginTop: 4,
+  },
+
+  statusBox: {
+    borderRadius: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 14,
+    marginTop: 6,
+    alignSelf: "flex-start",
+  },
+  statusAvailable: {
+    backgroundColor: "#e6ffe6",
+    borderWidth: 1,
+    borderColor: "#a3e4a3",
+  },
+  statusPartial: {
+    backgroundColor: "#fff3e0",
+    borderWidth: 1,
+    borderColor: "#ffca9c",
+  },
+  statusFull: {
+    backgroundColor: "#f0f0f0",
+    borderWidth: 1,
+    borderColor: "#d0d0d0",
+  },
+  statusBoxText: {
+    fontSize: 13,
+    fontWeight: "600",
+  },
+
+  noSelectionText: {
+    color: "#888",
+    textAlign: "center",
+    padding: 16,
+    fontSize: 15,
+  },
+
+  buttonRow: {
+    flexDirection: "row",
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    gap: 12,
+  },
+  actionButton: {
+    flex: 1,
+    paddingVertical: 14,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: 8,
   },
   backButton: {
-    backgroundColor: "#fff",
+    backgroundColor: "#f0f0f0",
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 12,
-    paddingVertical: 14,
-    paddingHorizontal: 40,
-    alignSelf: "center",
-    marginVertical: 32,
+    borderColor: "#ddd",
   },
-  backText: {
+  backButtonText: {
     fontSize: 16,
-    fontWeight: "600",
     color: "#333",
+    fontWeight: "500",
+  },
+  nextButton: {
+    backgroundColor: "#2321c4",
+  },
+  nextButtonDisabled: {
+    backgroundColor: "#a0a0ff",
+    opacity: 0.7,
+  },
+  nextButtonText: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "600",
   },
 });

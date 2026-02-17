@@ -1,11 +1,13 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from 'react-native';
 
 
 export default function CardPayment() {
   
+  const {width}= useWindowDimensions();
+  const isVerySmallScreen = width < 360;
   const [name, setName] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
@@ -25,13 +27,13 @@ export default function CardPayment() {
       
       {/*Payment methods*/}
         <View style={styles.toggleContainer}>
-          <Pressable style={[styles.toggleButton, styles.toggleActive]}>
+          <Pressable style={{...styles.toggleButton, ...styles.toggleInActive}}>
             <Ionicons name="checkbox" size={20} color="#2321c4" />
             <Text style={styles.toggleTextActive}><Ionicons name="card-outline" size={20} color="#2321c4" />  Card Payment</Text>
             <Text>Pay with debit/credit card</Text>
           </Pressable>
           <Link href="/TransferPayment" asChild>
-          <Pressable style={[styles.toggleButton, styles.toggleActive]}>
+          <Pressable style={{...styles.toggleButton, ...styles.toggleActive}}>
             <Ionicons name="checkbox" size={20} color="#2321c4" />
             <Text style={styles.toggleTextActive}><Ionicons name="phone-portrait-outline" size={20} color="#21c473" />  Bank Transfer</Text>
             <Text>Pay with debit/credit card</Text>
@@ -41,7 +43,7 @@ export default function CardPayment() {
      </View>
         {/* Form Inputs */}
          <View style={styles.container1}>
-          <Text>Card Details</Text>
+          <Text style={styles.head}>Card Details</Text>
         <View style={styles.formContainer}>
           <Text style={styles.label}>Cardholder Name</Text>
           <View style={styles.inputWrapper}>
@@ -68,30 +70,42 @@ export default function CardPayment() {
          </View> 
 
          <View style={styles.LastFormRow}>
-          <Text style={styles.label}>Expiry Date</Text>
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              placeholder="MM/YY"
-              placeholderTextColor="#888"
-              value={expiryDate}
-              onChangeText={setExpiryDate}
-              keyboardType="numeric"
-            />
+  {/* Row container for side-by-side fields */}
+  <View style={styles.expiryCvvRow}>
+    {/* Expiry Date column */}
+    <View style={styles.column}>
+      <Text style={styles.label}>Expiry Date</Text>
+      <View style={styles.inputWrapper}>
+        <TextInput
+          style={styles.input}
+          placeholder="MM/YY"
+          placeholderTextColor="#888"
+          value={expiryDate}
+          onChangeText={setExpiryDate}
+          keyboardType="numeric"
+          maxLength={5}           // Helps prevent typing too many digits
+        />
+      </View>
+    </View>
 
-            <Text style={styles.label}>CVV</Text>
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              placeholder="123"
-              placeholderTextColor="#888"
-              value={cvv}
-              onChangeText={setCvv}
-              keyboardType="numeric"
-            />
-          </View>
-          </View>
-         </View>
+    {/* CVV column */}
+    <View style={styles.column}>
+      <Text style={styles.label}>CVV</Text>
+      <View style={styles.inputWrapper}>
+        <TextInput
+          style={styles.input}
+          placeholder="123"
+          placeholderTextColor="#888"
+          value={cvv}
+          onChangeText={setCvv}
+          keyboardType="numeric"
+          maxLength={4}
+          secureTextEntry       // Hides input for security (dots instead of numbers)
+        />
+      </View>
+    </View>
+  </View>
+</View>
         </View>
       </View> 
     
@@ -107,7 +121,7 @@ export default function CardPayment() {
                   <Text style={styles.value}>N0</Text>
               </View>    
               <View  style={styles.hrContainer}> 
-                    <Text style={styles.hr}>_______________________________________________________</Text>
+                    <Text style={styles.hr}>________________________________________________________________________________________________</Text>
                </View>
                 <View style={styles.subText} >
                   <Text style={styles.label1}>Total Amount </Text>
@@ -116,22 +130,20 @@ export default function CardPayment() {
 
       </View>
 
-      {/* Navigation Buttons */}
-      <View style={styles.toggleContainer}>
+      {/*Navigation Buttons */}
+                   <View style={styles.toggleContainer}>
                            <Link href="/classic" asChild>
                               <Pressable
-                                style={[styles.ButtomtoggleButton, styles.ButtomtoggleActive]}>
+                                style={{...styles.BottomtoggleButton, ...styles.BottomtoggleActive}}>
                                  <Text><Ionicons name="arrow-back" size={16} color="black" /> Back</Text>
-                              </Pressable>
+                              </Pressable> 
                               </Link>
                               <Link href="/CompletePayment" asChild>
                               <Pressable
-                                style={[styles.ButtomtoggleButton, styles.ButtomtoggleInActive]}>
-                                 <Text><Ionicons name="checkmark-circle-outline" size={16} color="white" /> Pay Now</Text>
+                                style={{...styles.BottomtoggleButton, ...styles.BottomtoggleInActive}}>
+                                 <Text><Ionicons name="checkmark-circle-outline" size={16} color="black" /> Pay Now</Text>
                               </Pressable>
                               </Link>
-      
-                           
                    </View>
 
     </ScrollView>
@@ -156,21 +168,32 @@ const styles = StyleSheet.create({
     },
 
   head: {
-    color: '#e9d5ff',
+    color: '#0a0202',
     fontSize: 22,
     fontWeight: 'bold',
-    textAlign: 'center',
+    justifyContent: 'flex-start',
     marginBottom: 20,
   },
+  //-------Last form row----------
   LastFormRow: {
-    backgroundColor: '#1a0835',
+    flexDirection:'row',
+    backgroundColor: 'white',
     borderRadius: 16,
-    padding: 20,
+    padding: 16,
     marginBottom: 24,
     borderWidth: 1,
-    borderColor: '#3a1a5e',
+    borderColor: 'white',
   },
-
+  expiryCvvRow: {
+    flexDirection: 'row',           // ← Makes children go side by side
+    justifyContent: 'space-between', // Spreads them with space in between
+    gap:20,
+    width:'100%',
+  },
+  column:{
+    flex:1,
+    minWidth: 140
+  },
   // ── Toggle (Segmented control) ──
   toggleContainer: {
     flexDirection: 'row',
@@ -186,30 +209,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   toggleActive: {
-    backgroundColor: '#ef4444', // red for Spent
-  },
-  toggleInactive: {
-    borderColor: '#c084fc',
+    backgroundColor: 'white', 
     borderWidth:1,
-
-    // no background → transparent / uses container bg
+    borderColor:'#ccc'
   },
   toggleTextActive: {
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     fontSize: 16,
   },
-  toggleTextInactive: {
-    color: '#c4b5fd',
-    fontSize: 16,
-
+  toggleInActive:{
+    borderWidth:1,
+    borderColor:'#5078fa',
+    backgroundColor:'#e1eefc'
   },
 
   // ── Form ──
   formContainer: {},
 
   label: {
-    color: '#d1d5db',
+    color: '#050000',
     fontSize: 15,
     marginBottom: 6,
     fontWeight: '500',
@@ -218,12 +237,12 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#220a55',
+    backgroundColor: '#f1f6fa',
     borderRadius: 12,
     marginBottom: 20,
     paddingHorizontal: 14,
     borderWidth: 1,
-    borderColor: '#4a2a7a',
+    borderColor: '#f1f6fa',
   },
 
   currency: {
@@ -255,18 +274,18 @@ const styles = StyleSheet.create({
 
   // ── Recent Transactions ──
   sectionTitle: {
-    color: '#e9d5ff',
+    color: '#010002',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 12,
   },
 
   transactionsList: {
-    backgroundColor: '#1a0835',
+    backgroundColor: '#ccc',
     borderRadius: 16,
     padding: 8,
     borderWidth: 1,
-    borderColor: '#3a1a5e',
+    borderColor: '#ccc',
   },
 
   transactionItem: {
@@ -278,7 +297,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderRadius: 8,
     marginBottom: 8,
-    backgroundColor: '#220a55',
+    backgroundColor: '#ccc',
   },
 
   transactionInfo: {
@@ -328,19 +347,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   // ----Buttom Buttons
-   ButtomtoggleButton: {
+   BottomtoggleButton: {
     flex: 1,
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: 'center',
     
   },
-  ButtomtoggleActive: {
+  BottomtoggleActive: {
    borderWidth:1,
+   borderColor:'#ccc',
+   backgroundColor:'#ccc'
    
   },
-  ButtomtoggleInActive: {
-    backgroundColor: '#2321c4',
+  BottomtoggleInActive: {
+    backgroundColor: '#10c25a',
     color:'white'
   },
 });
