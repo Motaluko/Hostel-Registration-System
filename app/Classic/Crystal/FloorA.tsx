@@ -1,11 +1,18 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import { Link, type Href } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View, useWindowDimensions, } from "react-native";
+import {
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
+} from "react-native";
 
 type Room = {
   number: string;
-  occupancy: string; // "0/4", "1/4", "2/4", "3/4", "4/4"
+  occupancy: string; // "0/4", "1/4", etc.
   status: "empty" | "partial" | "full";
 };
 
@@ -14,28 +21,23 @@ export default function HostelType() {
   const isSmallScreen = width < 400;
 
   const [selectedFloor, setSelectedFloor] = useState<string | null>(null);
-  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
+  const [selectedRoomNumber, setSelectedRoomNumber] = useState<string | null>(
+    null,
+  );
 
-  // Mock data – replace with real backend fetch later
-  const mockRooms: Room[] = Array.from({ length: 30 }, (_, i) => {
-    const num = (i + 1).toString();
-    let occupancy = "0/4";
-    let status: Room["status"] = "empty";
-
-    // Demo variation – replace with real data from API
-    if (i % 7 === 0) {
-      occupancy = "4/4";
-      status = "full";
-    } else if (i % 5 === 0) {
-      occupancy = "2/4";
-      status = "partial";
-    } else if (i % 11 === 0) {
-      occupancy = "3/4";
-      status = "partial";
+  const [occupancies, setOccupancies] = useState<Record<string, string>>(() => {
+    const initial: Record<string, string> = {};
+    for (let i = 1; i <= 30; i++) {
+      initial[i.toString()] = "0/4";
     }
-
-    return { number: num, occupancy, status };
+    return initial;
   });
+
+  const getStatus = (occ: string): Room["status"] => {
+    if (occ === "0/4") return "empty";
+    if (occ === "4/4") return "full";
+    return "partial";
+  };
 
   const getRoomBoxStyle = (status: Room["status"]) => {
     switch (status) {
@@ -52,12 +54,34 @@ export default function HostelType() {
 
   const getStatusText = (status: Room["status"]) => {
     switch (status) {
-      case "empty": return "Available";
-      case "partial": return "Partially Full";
-      case "full": return "Full";
-      default: return "-";
+      case "empty":
+        return "Available";
+      case "partial":
+        return "Partially Full";
+      case "full":
+        return "Full";
+      default:
+        return "-";
     }
   };
+
+  const handleRoomPress = (roomNumber: string) => {
+    setSelectedRoomNumber(roomNumber);
+
+    setOccupancies((prev) => {
+      const current = prev[roomNumber] || "0/4";
+      const [taken] = current.split("/").map(Number);
+      const nextTaken = taken >= 4 ? 0 : taken + 1;
+      return { ...prev, [roomNumber]: `${nextTaken}/4` };
+    });
+  };
+
+  const selectedOccupancy = selectedRoomNumber
+    ? occupancies[selectedRoomNumber]
+    : null;
+  const selectedStatus = selectedOccupancy
+    ? getStatus(selectedOccupancy)
+    : null;
 
   return (
     <ScrollView style={styles.body}>
@@ -65,7 +89,7 @@ export default function HostelType() {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Select Your Room</Text>
         <Text style={styles.headerSubtitle}>
-          Platinum Hall - 4 students per room
+          Crystal Hall - 4 students per room
         </Text>
       </View>
 
@@ -77,22 +101,23 @@ export default function HostelType() {
           {["A", "B", "C", "D"].map((floor) => (
             <Link
               key={floor}
-              href={`/Classic/Platinum/Floor${floor}` as Href}
+              href={`/Classic/Crystal/Floor${floor}` as Href}
               asChild
             >
-             <Pressable
-  style={{
-    ...styles.floorButton,
-    ...(selectedFloor === floor ? styles.floorButtonSelected : {}),
-  }}
-  onPress={() => setSelectedFloor(floor)}
->
-  <Text
-    style={{
-      ...styles.floorButtonText,
-      ...(selectedFloor === floor ? styles.floorButtonTextSelected : {}),
-    }}
-  >
+              <Pressable
+                style={{
+                  ...styles.floorButton,
+                  ...(selectedFloor === floor && styles.floorButtonSelected),
+                }}
+                onPress={() => setSelectedFloor(floor)}
+              >
+                <Text
+                  style={{
+                    ...styles.floorButtonText,
+                    ...(selectedFloor === floor &&
+                      styles.floorButtonTextSelected),
+                  }}
+                >
                   Floor {floor}
                 </Text>
               </Pressable>
@@ -120,28 +145,34 @@ export default function HostelType() {
         </View>
       </View>
 
-      {/* Example: Floor A Rooms */}
+      {/* Floor A Rooms */}
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Floor A - Rooms (1-30)</Text>
 
         <View style={styles.roomsGrid}>
-          {mockRooms.map((room) => (
-            <Pressable
-              key={room.number}
-              style={[
-                styles.roomBox,
-                getRoomBoxStyle(room.status),
-                selectedRoom?.number === room.number && styles.roomBoxSelected,
-              ]}
-              onPress={() => setSelectedRoom(room)}
-            >
-              <Text style={styles.roomNumber}>{room.number}</Text>
-              <View style={styles.occupancyRow}>
-                <Ionicons name="people-outline" size={16} color="white" />
-                <Text style={styles.occupancyText}>{room.occupancy}</Text>
-              </View>
-            </Pressable>
-          ))}
+          {Array.from({ length: 30 }, (_, i) => {
+            const num = (i + 1).toString();
+            const occ = occupancies[num] || "0/4";
+            const status = getStatus(occ);
+
+            return (
+              <Pressable
+                key={num}
+                style={[
+                  styles.roomBox,
+                  getRoomBoxStyle(status),
+                  selectedRoomNumber === num && styles.roomBoxSelected,
+                ]}
+                onPress={() => handleRoomPress(num)}
+              >
+                <Text style={styles.roomNumber}>{num}</Text>
+                <View style={styles.occupancyRow}>
+                  <Ionicons name="people-outline" size={16} color="white" />
+                  <Text style={styles.occupancyText}>{occ}</Text>
+                </View>
+              </Pressable>
+            );
+          })}
         </View>
       </View>
 
@@ -149,50 +180,55 @@ export default function HostelType() {
       <View style={styles.card}>
         <Text style={styles.sectionTitle}>Selected Room Details</Text>
 
-        {selectedRoom ? (
+        {selectedRoomNumber && selectedOccupancy && selectedStatus ? (
           <View style={styles.detailsGrid}>
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Room Number</Text>
-              <Text style={styles.detailValue}>{selectedRoom.number}</Text>
+              <Text style={styles.detailValue}>{selectedRoomNumber}</Text>
             </View>
 
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Occupancy</Text>
-              <Text style={styles.detailValue}>{selectedRoom.occupancy}</Text>
+              <Text style={styles.detailValue}>{selectedOccupancy}</Text>
             </View>
 
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Floor</Text>
-              <Text style={styles.detailValue}>{selectedFloor ?? "-"}</Text>
+              <Text style={styles.detailValue}>
+                {selectedFloor ? `Floor ${selectedFloor}` : "Not selected"}
+              </Text>
             </View>
 
             <View style={styles.detailItem}>
               <Text style={styles.detailLabel}>Status</Text>
               <View
-                style={[
-                  styles.statusBox,
-                  selectedRoom.status === "empty" && styles.statusAvailable,
-                  selectedRoom.status === "partial" && styles.statusPartial,
-                  selectedRoom.status === "full" && styles.statusFull,
-                ]}
+                style={{
+                  ...styles.statusBox,
+                  ...(selectedStatus === "empty" && styles.statusAvailable),
+                  ...(selectedStatus === "partial" && styles.statusPartial),
+                  ...(selectedStatus === "full" && styles.statusFull),
+                }}
               >
                 <Text style={styles.statusBoxText}>
-                  {getStatusText(selectedRoom.status)}
+                  {getStatusText(selectedStatus)}
                 </Text>
               </View>
             </View>
           </View>
         ) : (
-          <Text style={styles.noSelectionText}>
-            No room selected yet
-          </Text>
+          <Text style={styles.noSelectionText}>Tap a room to select it</Text>
         )}
       </View>
 
       {/* Bottom Buttons */}
       <View style={styles.buttonRow}>
         <Link href="/classic" asChild>
-          <Pressable style={[styles.actionButton, styles.backButton]}>
+          <Pressable
+            style={{
+              ...styles.actionButton,
+              ...styles.backButton,
+            }}
+          >
             <Ionicons name="arrow-back" size={18} color="#333" />
             <Text style={styles.backButtonText}> Back</Text>
           </Pressable>
@@ -200,12 +236,12 @@ export default function HostelType() {
 
         <Link href="/CardPayment" asChild>
           <Pressable
-            style={[
-              styles.actionButton,
-              styles.nextButton,
-              !selectedRoom && styles.nextButtonDisabled,
-            ]}
-            disabled={!selectedRoom}
+            style={{
+              ...styles.actionButton,
+              ...styles.nextButton,
+              ...(!selectedRoomNumber && styles.nextButtonDisabled),
+            }}
+            disabled={!selectedRoomNumber}
           >
             <Text style={styles.nextButtonText}>
               Next <Ionicons name="arrow-forward" size={18} color="white" />
@@ -224,7 +260,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#e1eefc",
   },
-
   header: {
     backgroundColor: "#2321c4",
     paddingVertical: 20,
@@ -241,7 +276,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginTop: 6,
   },
-
   card: {
     backgroundColor: "#ffffff",
     marginHorizontal: 12,
@@ -256,21 +290,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
   },
-
   sectionTitle: {
     fontSize: 18,
     fontWeight: "700",
     marginBottom: 16,
     color: "#111",
   },
-
   floorRow: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 16,
     justifyContent: "center",
   },
-
   floorButton: {
     paddingVertical: 14,
     paddingHorizontal: 28,
@@ -293,7 +324,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#1e60aa",
   },
-
   colorCode: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -309,14 +339,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#555",
   },
-
   roomsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 10,
     justifyContent: "space-evenly",
   },
-
   roomBox: {
     width: 68,
     height: 68,
@@ -346,7 +374,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35,
     shadowRadius: 8,
   },
-
   roomNumber: {
     color: "white",
     fontSize: 18,
@@ -363,7 +390,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "500",
   },
-
   detailsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -384,7 +410,6 @@ const styles = StyleSheet.create({
     color: "#111",
     marginTop: 4,
   },
-
   statusBox: {
     borderRadius: 10,
     paddingVertical: 6,
@@ -411,14 +436,12 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: "600",
   },
-
   noSelectionText: {
     color: "#888",
     textAlign: "center",
     padding: 16,
     fontSize: 15,
   },
-
   buttonRow: {
     flexDirection: "row",
     paddingHorizontal: 16,
