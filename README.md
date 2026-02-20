@@ -19,12 +19,12 @@ Streamlining student hostel allocation — secure, responsive, and easy to use o
 - JavaScript (with potential for TypeScript later)
 - Git & GitHub for version control
 - Frontend authentication layer
-- Mobile emulators + real device testing (iOS/Android, various screen sizes)
+- Mobile emulators + real device testing (iOS/Android, various screen sizes)gt
 - Explored: Expo EAS Build, managed vs bare workflow, BaaS options (Firebase, Supabase, Appwrite)
 
 ## Project Status
 
-Personal/ongoing project. Currently focused on UI responsiveness, authentication security, code quality, and preparing for backend integration (real data storage, room availability, admin features).
+Ongoing project. Currently focused on UI responsiveness, authentication security, code quality, and preparing for backend integration (real data storage, room availability, admin features).
 
 ## Installation & Setup
 
@@ -34,11 +34,3 @@ Personal/ongoing project. Currently focused on UI responsiveness, authentication
 - npm or Yarn
 - Expo CLI: `npm install -g expo-cli`
 - iOS: Xcode (Mac) | Android: Android Studio
-
-### Steps
-
-1. Clone the repo
-   ```bash
-   git clone https://github.com/[your-username]/hostel-registration-app.git
-   cd hostel-registration-app
-   ```
