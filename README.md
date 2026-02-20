@@ -1,50 +1,44 @@
-# Welcome to your Expo app 👋
+# Hostel Registration App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A **React Native** mobile application designed to simplify hostel registration for students. Users can sign up, log in securely, view room availability (or similar flows), and complete registration requests with a responsive, device-friendly interface.
 
-## Get started
+Streamlining student hostel allocation — secure, responsive, and easy to use on any phone.
 
-1. Install dependencies
+## Features
 
+- Secure user authentication (signup/login with token-based checks, role-based UI visibility, and login redirects)
+- Responsive layouts that adapt beautifully to different screen sizes (phones, tablets)
+- Dynamic UI elements like adjustable card widths based on device dimensions
+- Cross-platform compatibility (iOS & Android)
+- Thorough testing across multiple devices and emulators
+- Clean, readable codebase with proper Git workflow (feature branches, atomic commits)
+
+## Technologies Used
+
+- React Native + Expo (for development, testing, and builds)
+- JavaScript (with potential for TypeScript later)
+- Git & GitHub for version control
+- Frontend authentication layer
+- Mobile emulators + real device testing (iOS/Android, various screen sizes)
+- Explored: Expo EAS Build, managed vs bare workflow, BaaS options (Firebase, Supabase, Appwrite)
+
+## Project Status
+
+Personal/ongoing project. Currently focused on UI responsiveness, authentication security, code quality, and preparing for backend integration (real data storage, room availability, admin features).
+
+## Installation & Setup
+
+### Prerequisites
+
+- Node.js (v18+)
+- npm or Yarn
+- Expo CLI: `npm install -g expo-cli`
+- iOS: Xcode (Mac) | Android: Android Studio
+
+### Steps
+
+1. Clone the repo
    ```bash
-   npm install
+   git clone https://github.com/[your-username]/hostel-registration-app.git
+   cd hostel-registration-app
    ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
