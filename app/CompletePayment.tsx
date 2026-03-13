@@ -9,6 +9,7 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HostelType() {
   const [selectedFloor, setSelectedFloor] = useState<string | null>(null);
@@ -17,198 +18,219 @@ export default function HostelType() {
   const isSmallScreen = width < 380;
 
   return (
-    <ScrollView style={styles.body}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Booking Confirmed!</Text>
-        <Text style={{ color: "#cfcfcf", fontSize: 15 }}>
-          Your hostel room has been successfully reserved
-        </Text>
-      </View>
-
-      {/* Success message + icon */}
-      <View style={{ alignItems: "center", paddingVertical: 24 }}>
-        <Ionicons
-          name="checkmark-circle-outline"
-          size={isSmallScreen ? 64 : 80}
-          color="green"
-        />
-        <Text
-          style={{
-            fontSize: isSmallScreen ? 20 : 24,
-            fontWeight: "bold",
-            marginTop: 16,
-          }}
-        >
-          Booking Successful!
-        </Text>
-        <Text
-          style={{
-            textAlign: "center",
-            color: "#666",
-            marginTop: 8,
-            paddingHorizontal: 24,
-          }}
-        >
-          Your booking has been confirmed and saved
-        </Text>
-      </View>
-
-      {/* Booking Details */}
-      <View style={styles.container1}>
-        <Text style={styles.head}>Booking Details</Text>
-
-        <View style={styles.divider} />
-
-        {/* Row 1 */}
-        <View
-          style={[styles.info, isSmallScreen && { flexWrap: "wrap", gap: 16 }]}
-        >
-          <View style={styles.infoItem}>
-            <Ionicons name="person-outline" size={20} color="blue" />
-            <View style={{ marginLeft: 12 }}>
-              <Text>Student Name</Text>
-              <Text style={{ fontWeight: "bold" }}>-</Text>
-            </View>
-          </View>
-          <View style={styles.infoItem}>
-            <Ionicons name="person-outline" size={20} color="blue" />
-            <View style={{ marginLeft: 12 }}>
-              <Text>Matric Number</Text>
-              <Text style={{ fontWeight: "bold" }}>-</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.divider} />
-
-        {/* Row 2 */}
-        <View
-          style={[styles.info, isSmallScreen && { flexWrap: "wrap", gap: 16 }]}
-        >
-          <View style={styles.infoItem}>
-            <Ionicons name="home-outline" size={20} color="purple" />
-            <View style={{ marginLeft: 12 }}>
-              <Text>Hostel Name</Text>
-              <Text style={{ fontWeight: "bold" }}>-</Text>
-            </View>
-          </View>
-          <View style={styles.infoItem}>
-            <Ionicons name="bed-outline" size={20} color="purple" />
-            <View style={{ marginLeft: 12 }}>
-              <Text>Room Number</Text>
-              <Text style={{ fontWeight: "bold" }}>-</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.divider} />
-
-        {/* Row 3 */}
-        <View
-          style={[styles.info, isSmallScreen && { flexWrap: "wrap", gap: 16 }]}
-        >
-          <View style={styles.infoItem}>
-            <Ionicons name="calendar-outline" size={20} color="orange" />
-            <View style={{ marginLeft: 12 }}>
-              <Text>Academic Session</Text>
-              <Text style={{ fontWeight: "bold" }}>-</Text>
-            </View>
-          </View>
-          <View style={styles.infoItem}>
-            <Ionicons name="time-outline" size={20} color="orange" />
-            <View style={{ marginLeft: 12 }}>
-              <Text>Semester</Text>
-              <Text style={{ fontWeight: "bold" }}>-</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.divider} />
-
-        {/* Row 4 */}
-        <View
-          style={[styles.info, isSmallScreen && { flexWrap: "wrap", gap: 16 }]}
-        >
-          <View style={styles.infoItem}>
-            <Ionicons name="card-outline" size={20} color="green" />
-            <View style={{ marginLeft: 12 }}>
-              <Text>Payment Method</Text>
-              <Text style={{ fontWeight: "bold" }}>-</Text>
-            </View>
-          </View>
-          <View style={styles.infoItem}>
-            <Ionicons name="checkmark-circle-outline" size={20} color="green" />
-            <View style={{ marginLeft: 12 }}>
-              <Text>Booking Status</Text>
-              <Text style={{ fontWeight: "bold" }}>Confirmed</Text>
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.divider} />
-      </View>
-
-      {/* Receipt Sent */}
-      <View style={styles.receipt}>
-        <Ionicons name="mail" size={24} color="blue" />
-        <View style={{ marginLeft: 16, flex: 1 }}>
-          <Text style={styles.head}>Receipt Sent</Text>
-          <Text style={{ color: "#444", lineHeight: 20 }}>
-            A confirmation email with your booking details and receipt has been
-            sent to your registered email address. Please check your inbox (and
-            spam folder) for more information.
+    <SafeAreaView>
+      <ScrollView style={styles.body}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Booking Confirmed!</Text>
+          <Text style={{ color: "#cfcfcf", fontSize: 15 }}>
+            Your hostel room has been successfully reserved
           </Text>
         </View>
-      </View>
 
-      {/* Important Notice */}
-      <View style={styles.notice}>
-        <Text style={styles.head}>Important Notice</Text>
-        <Text style={{ color: "#444", marginTop: 8, lineHeight: 20 }}>
-          • Please print or save a copy of this confirmation for your records
-          {"\n"}• You will need to present this booking confirmation during
-          check-in{"\n"}• Check-in will begin 2 weeks before the start of the
-          semester{"\n"}• For any questions, contact the hostel management
-          office
-        </Text>
-      </View>
-
-      {/* Navigation Buttons */}
-      <View style={styles.toggleContainer}>
-        <Pressable
-          style={{ ...styles.BottomtoggleButton, ...styles.BottomtoggleActive }}
-        >
-          <Text style={{ color: "#4c5df7", fontWeight: "600" }}>
-            Print Receipt
+        {/* Success message + icon */}
+        <View style={{ alignItems: "center", paddingVertical: 24 }}>
+          <Ionicons
+            name="checkmark-circle-outline"
+            size={isSmallScreen ? 64 : 80}
+            color="green"
+          />
+          <Text
+            style={{
+              fontSize: isSmallScreen ? 20 : 24,
+              fontWeight: "bold",
+              marginTop: 16,
+            }}
+          >
+            Booking Successful!
           </Text>
-        </Pressable>
+          <Text
+            style={{
+              textAlign: "center",
+              color: "#666",
+              marginTop: 8,
+              paddingHorizontal: 24,
+            }}
+          >
+            Your booking has been confirmed and saved
+          </Text>
+        </View>
 
-        <Link href="/hostelType" asChild>
+        {/* Booking Details */}
+        <View style={styles.container1}>
+          <Text style={styles.head}>Booking Details</Text>
+
+          <View style={styles.divider} />
+
+          {/* Row 1 */}
+          <View
+            style={[
+              styles.info,
+              isSmallScreen && { flexWrap: "wrap", gap: 16 },
+            ]}
+          >
+            <View style={styles.infoItem}>
+              <Ionicons name="person-outline" size={20} color="blue" />
+              <View style={{ marginLeft: 12 }}>
+                <Text>Student Name</Text>
+                <Text style={{ fontWeight: "bold" }}>-</Text>
+              </View>
+            </View>
+            <View style={styles.infoItem}>
+              <Ionicons name="person-outline" size={20} color="blue" />
+              <View style={{ marginLeft: 12 }}>
+                <Text>Matric Number</Text>
+                <Text style={{ fontWeight: "bold" }}>-</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.divider} />
+
+          {/* Row 2 */}
+          <View
+            style={[
+              styles.info,
+              isSmallScreen && { flexWrap: "wrap", gap: 16 },
+            ]}
+          >
+            <View style={styles.infoItem}>
+              <Ionicons name="home-outline" size={20} color="purple" />
+              <View style={{ marginLeft: 12 }}>
+                <Text>Hostel Name</Text>
+                <Text style={{ fontWeight: "bold" }}>-</Text>
+              </View>
+            </View>
+            <View style={styles.infoItem}>
+              <Ionicons name="bed-outline" size={20} color="purple" />
+              <View style={{ marginLeft: 12 }}>
+                <Text>Room Number</Text>
+                <Text style={{ fontWeight: "bold" }}>-</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.divider} />
+
+          {/* Row 3 */}
+          <View
+            style={[
+              styles.info,
+              isSmallScreen && { flexWrap: "wrap", gap: 16 },
+            ]}
+          >
+            <View style={styles.infoItem}>
+              <Ionicons name="calendar-outline" size={20} color="orange" />
+              <View style={{ marginLeft: 12 }}>
+                <Text>Academic Session</Text>
+                <Text style={{ fontWeight: "bold" }}>-</Text>
+              </View>
+            </View>
+            <View style={styles.infoItem}>
+              <Ionicons name="time-outline" size={20} color="orange" />
+              <View style={{ marginLeft: 12 }}>
+                <Text>Semester</Text>
+                <Text style={{ fontWeight: "bold" }}>-</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.divider} />
+
+          {/* Row 4 */}
+          <View
+            style={[
+              styles.info,
+              isSmallScreen && { flexWrap: "wrap", gap: 16 },
+            ]}
+          >
+            <View style={styles.infoItem}>
+              <Ionicons name="card-outline" size={20} color="green" />
+              <View style={{ marginLeft: 12 }}>
+                <Text>Payment Method</Text>
+                <Text style={{ fontWeight: "bold" }}>-</Text>
+              </View>
+            </View>
+            <View style={styles.infoItem}>
+              <Ionicons
+                name="checkmark-circle-outline"
+                size={20}
+                color="green"
+              />
+              <View style={{ marginLeft: 12 }}>
+                <Text>Booking Status</Text>
+                <Text style={{ fontWeight: "bold" }}>Confirmed</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.divider} />
+        </View>
+
+        {/* Receipt Sent */}
+        <View style={styles.receipt}>
+          <Ionicons name="mail" size={24} color="blue" />
+          <View style={{ marginLeft: 16, flex: 1 }}>
+            <Text style={styles.head}>Receipt Sent</Text>
+            <Text style={{ color: "#444", lineHeight: 20 }}>
+              A confirmation email with your booking details and receipt has
+              been sent to your registered email address. Please check your
+              inbox (and spam folder) for more information.
+            </Text>
+          </View>
+        </View>
+
+        {/* Important Notice */}
+        <View style={styles.notice}>
+          <Text style={styles.head}>Important Notice</Text>
+          <Text style={{ color: "#444", marginTop: 8, lineHeight: 20 }}>
+            • Please print or save a copy of this confirmation for your records
+            {"\n"}• You will need to present this booking confirmation during
+            check-in{"\n"}• Check-in will begin 2 weeks before the start of the
+            semester{"\n"}• For any questions, contact the hostel management
+            office
+          </Text>
+        </View>
+
+        {/* Navigation Buttons */}
+        <View style={styles.toggleContainer}>
           <Pressable
             style={{
               ...styles.BottomtoggleButton,
-              ...styles.BottomtoggleInActive,
+              ...styles.BottomtoggleActive,
             }}
           >
-            <Text style={{ color: "white", fontWeight: "600" }}>
-              Back to Dashboard
+            <Text style={{ color: "#4c5df7", fontWeight: "600" }}>
+              Print Receipt
             </Text>
           </Pressable>
-        </Link>
-      </View>
 
-      {/* Footer */}
-      <View style={styles.footer}>
-        <Text style={{ color: "#666", fontSize: 14 }}>Booking Reference</Text>
-        <Text style={{ fontWeight: "bold", color: "#333" }}>
-          HRS-matricNum-year
-        </Text>
-      </View>
+          <Link href="/hostelType" asChild>
+            <Pressable
+              style={{
+                ...styles.BottomtoggleButton,
+                ...styles.BottomtoggleInActive,
+              }}
+            >
+              <Text style={{ color: "white", fontWeight: "600" }}>
+                Back to Dashboard
+              </Text>
+            </Pressable>
+          </Link>
+        </View>
 
-      {/* Extra bottom space */}
-      <View style={{ height: 40 }} />
-    </ScrollView>
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={{ color: "#666", fontSize: 14 }}>Booking Reference</Text>
+          <Text style={{ fontWeight: "bold", color: "#333" }}>
+            HRS-matricNum-year
+          </Text>
+        </View>
+
+        {/* Extra bottom space */}
+        <View style={{ height: 40 }} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

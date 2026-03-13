@@ -11,6 +11,7 @@ import {
   View,
   useWindowDimensions,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CardPayment() {
   const { width } = useWindowDimensions();
@@ -28,159 +29,161 @@ export default function CardPayment() {
   };
 
   return (
-    <ScrollView style={styles.body}>
-      {/* Header Section */}
-      <View style={styles.container1}>
-        <Text style={styles.head}>Select Payment Method</Text>
+    <SafeAreaView>
+      <ScrollView style={styles.body}>
+        {/* Header Section */}
+        <View style={styles.container1}>
+          <Text style={styles.head}>Select Payment Method</Text>
 
-        {/*Payment methods*/}
-        <View style={styles.toggleContainer}>
-          <Pressable
-            style={{ ...styles.toggleButton, ...styles.toggleInActive }}
-          >
-            <Ionicons name="checkbox" size={20} color="#2321c4" />
-            <Text style={styles.toggleTextActive}>
-              <Ionicons name="card-outline" size={20} color="#2321c4" /> Card
-              Payment
-            </Text>
-            <Text>Pay with debit/credit card</Text>
-          </Pressable>
-          <Link href="/TransferPayment" asChild>
+          {/*Payment methods*/}
+          <View style={styles.toggleContainer}>
             <Pressable
-              style={{ ...styles.toggleButton, ...styles.toggleActive }}
+              style={{ ...styles.toggleButton, ...styles.toggleInActive }}
             >
               <Ionicons name="checkbox" size={20} color="#2321c4" />
               <Text style={styles.toggleTextActive}>
-                <Ionicons
-                  name="phone-portrait-outline"
-                  size={20}
-                  color="#21c473"
-                />{" "}
-                Bank Transfer
+                <Ionicons name="card-outline" size={20} color="#2321c4" /> Card
+                Payment
               </Text>
               <Text>Pay with debit/credit card</Text>
             </Pressable>
-          </Link>
+            <Link href="/TransferPayment" asChild>
+              <Pressable
+                style={{ ...styles.toggleButton, ...styles.toggleActive }}
+              >
+                <Ionicons name="checkbox" size={20} color="#2321c4" />
+                <Text style={styles.toggleTextActive}>
+                  <Ionicons
+                    name="phone-portrait-outline"
+                    size={20}
+                    color="#21c473"
+                  />{" "}
+                  Bank Transfer
+                </Text>
+                <Text>Pay with debit/credit card</Text>
+              </Pressable>
+            </Link>
+          </View>
         </View>
-      </View>
-      {/* Form Inputs */}
-      <View style={styles.container1}>
-        <Text style={styles.head}>Card Details</Text>
-        <View style={styles.formContainer}>
-          <Text style={styles.label}>Cardholder Name</Text>
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              placeholder="Name on Card"
-              placeholderTextColor="#888"
-              value={name}
-              onChangeText={setName}
-            />
-          </View>
+        {/* Form Inputs */}
+        <View style={styles.container1}>
+          <Text style={styles.head}>Card Details</Text>
+          <View style={styles.formContainer}>
+            <Text style={styles.label}>Cardholder Name</Text>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="Name on Card"
+                placeholderTextColor="#888"
+                value={name}
+                onChangeText={setName}
+              />
+            </View>
 
-          <Text style={styles.label}>Card Number</Text>
-          <View style={styles.inputWrapper}>
-            <TextInput
-              style={styles.input}
-              placeholder="1234 5678 9012 4356"
-              placeholderTextColor="#888"
-              value={cardNumber}
-              onChangeText={setCardNumber}
-              keyboardType="numeric"
-            />
-          </View>
+            <Text style={styles.label}>Card Number</Text>
+            <View style={styles.inputWrapper}>
+              <TextInput
+                style={styles.input}
+                placeholder="1234 5678 9012 4356"
+                placeholderTextColor="#888"
+                value={cardNumber}
+                onChangeText={setCardNumber}
+                keyboardType="numeric"
+              />
+            </View>
 
-          <View style={styles.LastFormRow}>
-            {/* Row container for side-by-side fields */}
-            <View style={styles.expiryCvvRow}>
-              {/* Expiry Date column */}
-              <View style={styles.column}>
-                <Text style={styles.label}>Expiry Date</Text>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="MM/YY"
-                    placeholderTextColor="#888"
-                    value={expiryDate}
-                    onChangeText={setExpiryDate}
-                    keyboardType="numeric"
-                    maxLength={5} // Helps prevent typing too many digits
-                  />
+            <View style={styles.LastFormRow}>
+              {/* Row container for side-by-side fields */}
+              <View style={styles.expiryCvvRow}>
+                {/* Expiry Date column */}
+                <View style={styles.column}>
+                  <Text style={styles.label}>Expiry Date</Text>
+                  <View style={styles.inputWrapper}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="MM/YY"
+                      placeholderTextColor="#888"
+                      value={expiryDate}
+                      onChangeText={setExpiryDate}
+                      keyboardType="numeric"
+                      maxLength={5} // Helps prevent typing too many digits
+                    />
+                  </View>
                 </View>
-              </View>
 
-              {/* CVV column */}
-              <View style={styles.column}>
-                <Text style={styles.label}>CVV</Text>
-                <View style={styles.inputWrapper}>
-                  <TextInput
-                    style={styles.input}
-                    placeholder="123"
-                    placeholderTextColor="#888"
-                    value={cvv}
-                    onChangeText={setCvv}
-                    keyboardType="numeric"
-                    maxLength={4}
-                    secureTextEntry
-                  />
+                {/* CVV column */}
+                <View style={styles.column}>
+                  <Text style={styles.label}>CVV</Text>
+                  <View style={styles.inputWrapper}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="123"
+                      placeholderTextColor="#888"
+                      value={cvv}
+                      onChangeText={setCvv}
+                      keyboardType="numeric"
+                      maxLength={4}
+                      secureTextEntry
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
         </View>
-      </View>
 
-      {/*Payment Summary Section */}
-      <View style={styles.container1}>
-        <Text style={styles.sectionTitle}>Payment Summary</Text>
-        <View style={styles.subText}>
-          <Text style={styles.label1}>Room Booking Fee </Text>
-          <Text style={styles.value}>N0</Text>
+        {/*Payment Summary Section */}
+        <View style={styles.container1}>
+          <Text style={styles.sectionTitle}>Payment Summary</Text>
+          <View style={styles.subText}>
+            <Text style={styles.label1}>Room Booking Fee </Text>
+            <Text style={styles.value}>N0</Text>
+          </View>
+          <View style={styles.subText}>
+            <Text style={styles.label1}>Service Charge </Text>
+            <Text style={styles.value}>N0</Text>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.subText}>
+            <Text style={styles.label1}>Total Amount </Text>
+            <Text style={styles.value}>N0</Text>
+          </View>
         </View>
-        <View style={styles.subText}>
-          <Text style={styles.label1}>Service Charge </Text>
-          <Text style={styles.value}>N0</Text>
-        </View>
-        <View style={styles.divider} />
-        <View style={styles.subText}>
-          <Text style={styles.label1}>Total Amount </Text>
-          <Text style={styles.value}>N0</Text>
-        </View>
-      </View>
 
-      {/*Navigation Buttons */}
-      <View style={styles.toggleContainer}>
-        <Link href="/classic" asChild>
-          <Pressable
-            style={{
-              ...styles.BottomtoggleButton,
-              ...styles.BottomtoggleActive,
-            }}
-          >
-            <Text>
-              <Ionicons name="arrow-back" size={16} color="black" /> Back
-            </Text>
-          </Pressable>
-        </Link>
-        <Link href="/CompletePayment" asChild>
-          <Pressable
-            style={{
-              ...styles.BottomtoggleButton,
-              ...styles.BottomtoggleInActive,
-            }}
-          >
-            <Text>
-              <Ionicons
-                name="checkmark-circle-outline"
-                size={16}
-                color="black"
-              />{" "}
-              Pay Now
-            </Text>
-          </Pressable>
-        </Link>
-      </View>
-    </ScrollView>
+        {/*Navigation Buttons */}
+        <View style={styles.toggleContainer}>
+          <Link href="/classic" asChild>
+            <Pressable
+              style={{
+                ...styles.BottomtoggleButton,
+                ...styles.BottomtoggleActive,
+              }}
+            >
+              <Text>
+                <Ionicons name="arrow-back" size={16} color="black" /> Back
+              </Text>
+            </Pressable>
+          </Link>
+          <Link href="/CompletePayment" asChild>
+            <Pressable
+              style={{
+                ...styles.BottomtoggleButton,
+                ...styles.BottomtoggleInActive,
+              }}
+            >
+              <Text>
+                <Ionicons
+                  name="checkmark-circle-outline"
+                  size={16}
+                  color="black"
+                />{" "}
+                Pay Now
+              </Text>
+            </Pressable>
+          </Link>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

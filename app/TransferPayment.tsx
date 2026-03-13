@@ -1,135 +1,139 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function CardPayment() {
   return (
-    <ScrollView style={styles.body}>
-      {/* Header Section */}
-      <View style={styles.container1}>
-        <Text style={styles.head}>Select Payment Method</Text>
+    <SafeAreaView>
+      <ScrollView style={styles.body}>
+        {/* Header Section */}
+        <View style={styles.container1}>
+          <Text style={styles.head}>Select Payment Method</Text>
 
-        {/*Payment methods*/}
-        <View style={styles.toggleContainer}>
-          <Link href="/CardPayment" asChild>
-            <Pressable
-              style={{ ...styles.toggleButton, ...styles.toggleActive }}
-            >
-              <Ionicons name="checkbox" size={20} color="#2321c4" />
-              <Text style={styles.toggleTextActive}>
-                <Ionicons name="card-outline" size={20} color="#2321c4" /> Card
-                Payment
-              </Text>
-              <Text>Pay with debit/credit card</Text>
-            </Pressable>
-          </Link>
-          <Link href="/TransferPayment" asChild>
-            <Pressable
-              style={{ ...styles.toggleButton, ...styles.toggleInActive }}
-            >
-              <Ionicons name="checkbox" size={20} color="#2321c4" />
-              <Text style={styles.toggleTextActive}>
-                <Ionicons
-                  name="phone-portrait-outline"
-                  size={20}
-                  color="#21c473"
-                />{" "}
-                Bank Transfer
-              </Text>
-              <Text>Pay with debit/credit card</Text>
-            </Pressable>
-          </Link>
-        </View>
-      </View>
-      {/*Bank Transfer Details*/}
-      <View style={styles.container1}>
-        <View style={styles.subText}>
-          <Text style={{ ...styles.label1, ...styles.head }}>
-            Bank Transfer Details{" "}
-          </Text>
-          <Text style={styles.value}>
-            <Ionicons name="time-outline" size={20} color="red" />{" "}
-            29:56(countdown)
-          </Text>
-        </View>
-        <View style={styles.yellowBox}>
-          <Text style={styles.yellowBoxText}>
-            Note: Please compplete the transfer within 30 minutes. Your booking
-            will be automatically cancelled if payement is not received.
-          </Text>
-        </View>
-
-        <View style={styles.container}>
-          <View style={{ flexDirection: "column" }}>
-            <Text>Account Number</Text>
-            <Text style={{ fontWeight: "bold" }}>1234567890</Text>
+          {/*Payment methods*/}
+          <View style={styles.toggleContainer}>
+            <Link href="/CardPayment" asChild>
+              <Pressable
+                style={{ ...styles.toggleButton, ...styles.toggleActive }}
+              >
+                <Ionicons name="checkbox" size={20} color="#2321c4" />
+                <Text style={styles.toggleTextActive}>
+                  <Ionicons name="card-outline" size={20} color="#2321c4" />{" "}
+                  Card Payment
+                </Text>
+                <Text>Pay with debit/credit card</Text>
+              </Pressable>
+            </Link>
+            <Link href="/TransferPayment" asChild>
+              <Pressable
+                style={{ ...styles.toggleButton, ...styles.toggleInActive }}
+              >
+                <Ionicons name="checkbox" size={20} color="#2321c4" />
+                <Text style={styles.toggleTextActive}>
+                  <Ionicons
+                    name="phone-portrait-outline"
+                    size={20}
+                    color="#21c473"
+                  />{" "}
+                  Bank Transfer
+                </Text>
+                <Text>Pay with debit/credit card</Text>
+              </Pressable>
+            </Link>
           </View>
-          <Text style={{ color: "#2321c4" }}>
-            <Ionicons name="copy" size={20} color="#2321c4" />
-            Copy
-          </Text>
         </View>
-        <View style={styles.container2}>
-          <Text>Account Name</Text>
-          <Text style={{ fontWeight: "bold" }}>Hostel Room Selection</Text>
-        </View>
-        <View style={styles.container2}>
-          <Text>Bank Name</Text>
-          <Text style={{ fontWeight: "bold" }}>First Bank of Nigeria</Text>
-        </View>
-      </View>
-
-      {/*Payment Summary Section */}
-      <View style={styles.container1}>
-        <Text style={styles.sectionTitle}>Payment Summary</Text>
-        <View style={styles.subText}>
-          <Text style={styles.label1}>Room Booking Fee </Text>
-          <Text style={styles.value}>N0</Text>
-        </View>
-        <View style={styles.subText}>
-          <Text style={styles.label1}>Service Charge </Text>
-          <Text style={styles.value}>N0</Text>
-        </View>
-        <View style={styles.divider} />
-        <View style={styles.subText}>
-          <Text style={styles.label1}>Total Amount </Text>
-          <Text style={styles.value}>N0</Text>
-        </View>
-      </View>
-
-      {/*Navigation Buttons */}
-      <View style={styles.toggleContainer}>
-        <Link href="/classic" asChild>
-          <Pressable
-            style={{
-              ...styles.BottomtoggleButton,
-              ...styles.BottomtoggleActive,
-            }}
-          >
-            <Text>
-              <Ionicons name="arrow-back" size={16} color="black" /> Back
+        {/*Bank Transfer Details*/}
+        <View style={styles.container1}>
+          <View style={styles.subText}>
+            <Text style={{ ...styles.label1, ...styles.head }}>
+              Bank Transfer Details{" "}
             </Text>
-          </Pressable>
-        </Link>
-        <Link href="/CompletePayment" asChild>
-          <Pressable
-            style={{
-              ...styles.BottomtoggleButton,
-              ...styles.BottomtoggleInActive,
-            }}
-          >
-            <Text>
-              <Ionicons
-                name="checkmark-circle-outline"
-                size={16}
-                color="white"
-              />{" "}
-              I have transferred
+            <Text style={styles.value}>
+              <Ionicons name="time-outline" size={20} color="red" />{" "}
+              29:56(countdown)
             </Text>
-          </Pressable>
-        </Link>
-      </View>
-    </ScrollView>
+          </View>
+          <View style={styles.yellowBox}>
+            <Text style={styles.yellowBoxText}>
+              Note: Please compplete the transfer within 30 minutes. Your
+              booking will be automatically cancelled if payement is not
+              received.
+            </Text>
+          </View>
+
+          <View style={styles.container}>
+            <View style={{ flexDirection: "column" }}>
+              <Text>Account Number</Text>
+              <Text style={{ fontWeight: "bold" }}>1234567890</Text>
+            </View>
+            <Text style={{ color: "#2321c4" }}>
+              <Ionicons name="copy" size={20} color="#2321c4" />
+              Copy
+            </Text>
+          </View>
+          <View style={styles.container2}>
+            <Text>Account Name</Text>
+            <Text style={{ fontWeight: "bold" }}>Hostel Room Selection</Text>
+          </View>
+          <View style={styles.container2}>
+            <Text>Bank Name</Text>
+            <Text style={{ fontWeight: "bold" }}>First Bank of Nigeria</Text>
+          </View>
+        </View>
+
+        {/*Payment Summary Section */}
+        <View style={styles.container1}>
+          <Text style={styles.sectionTitle}>Payment Summary</Text>
+          <View style={styles.subText}>
+            <Text style={styles.label1}>Room Booking Fee </Text>
+            <Text style={styles.value}>N0</Text>
+          </View>
+          <View style={styles.subText}>
+            <Text style={styles.label1}>Service Charge </Text>
+            <Text style={styles.value}>N0</Text>
+          </View>
+          <View style={styles.divider} />
+          <View style={styles.subText}>
+            <Text style={styles.label1}>Total Amount </Text>
+            <Text style={styles.value}>N0</Text>
+          </View>
+        </View>
+
+        {/*Navigation Buttons */}
+        <View style={styles.toggleContainer}>
+          <Link href="/classic" asChild>
+            <Pressable
+              style={{
+                ...styles.BottomtoggleButton,
+                ...styles.BottomtoggleActive,
+              }}
+            >
+              <Text>
+                <Ionicons name="arrow-back" size={16} color="black" /> Back
+              </Text>
+            </Pressable>
+          </Link>
+          <Link href="/CompletePayment" asChild>
+            <Pressable
+              style={{
+                ...styles.BottomtoggleButton,
+                ...styles.BottomtoggleInActive,
+              }}
+            >
+              <Text>
+                <Ionicons
+                  name="checkmark-circle-outline"
+                  size={16}
+                  color="white"
+                />{" "}
+                I have transferred
+              </Text>
+            </Pressable>
+          </Link>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

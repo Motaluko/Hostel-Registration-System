@@ -9,6 +9,7 @@ import {
   useWindowDimensions,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HostelType() {
   {
@@ -22,146 +23,148 @@ export default function HostelType() {
     fontSize: width < 400 ? 18 : 22, // Adjust font size based on screen width
   };
   return (
-    <ScrollView style={styles.body}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Select Your Hostel </Text>
-        <Text style={{ color: "#cfcfcf", fontSize: 15 }}>
-          Available Hostel for students
-        </Text>
-      </View>
-      <View style={styles.container}>
-        {/*Nyberg*/}
-        <View style={styles.row}>
-          <Link href="/Regular/Nyberg/FloorA" asChild>
-            <Pressable style={styles.card}>
-              <Text style={styles.houseEmoji}>🏠</Text>
-              <Text style={styles.name}>Nyberg Hall</Text>
-              <View style={styles.box}>
-                <Text style={styles.boxText}>Regular</Text>
-              </View>
-
-              <View style={styles.hrContainer}>
-                <Text style={styles.hr}>
-                  _______________________________________________________
-                </Text>
-              </View>
-
-              <View style={styles.subText}>
-                <Text style={styles.label}>Capacity: </Text>
-                <Text style={styles.value}>6 students/room</Text>
-              </View>
-              <View style={styles.subText}>
-                <Text style={styles.label}>Gender: </Text>
-                <Text style={styles.value}>Female</Text>
-              </View>
-              <View style={styles.subText}>
-                <Ionicons name="location" size={16} color="#585757" />
-                <Text style={styles.value}> Main Campus </Text>
-              </View>
-              <View style={styles.hrContainer}>
-                <Text style={styles.hr}>
-                  _______________________________________________________
-                </Text>
-              </View>
-              <View style={styles.subText}>
-                <Text style={styles.label}>Availabilty: </Text>
-                <View style={styles.box1}>
-                  <Text style={styles.boxText1}>Available</Text>
+    <SafeAreaView>
+      <ScrollView style={styles.body}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Select Your Hostel </Text>
+          <Text style={{ color: "#cfcfcf", fontSize: 15 }}>
+            Available Hostel for students
+          </Text>
+        </View>
+        <View style={styles.container}>
+          {/*Nyberg*/}
+          <View style={styles.row}>
+            <Link href="/Regular/Nyberg/FloorA" asChild>
+              <Pressable style={styles.card}>
+                <Text style={styles.houseEmoji}>🏠</Text>
+                <Text style={styles.name}>Nyberg Hall</Text>
+                <View style={styles.box}>
+                  <Text style={styles.boxText}>Regular</Text>
                 </View>
-              </View>
-            </Pressable>
-          </Link>
 
-          {/*Ogden*/}
-          <Link href="/Regular/Ogden/FloorA" asChild>
-            <Pressable style={styles.card}>
-              <Text style={styles.houseEmoji}>🏠</Text>
-              <Text style={styles.name}>Ogden Hall</Text>
-              <View style={styles.box}>
-                <Text style={styles.boxText}>Regular</Text>
-              </View>
-
-              <View style={styles.hrContainer}>
-                <Text style={styles.hr}>
-                  _______________________________________________________
-                </Text>
-              </View>
-              <View style={styles.subText}>
-                <Text style={styles.label}>Capacity: </Text>
-                <Text style={styles.value}>6 students/room</Text>
-              </View>
-              <View style={styles.subText}>
-                <Text style={styles.label}>Gender: </Text>
-                <Text style={styles.value}>Female</Text>
-              </View>
-              <View style={styles.subText}>
-                <Ionicons name="location" size={16} color="#585757" />
-                <Text style={styles.value}> Main Campus </Text>
-              </View>
-              <View style={styles.hrContainer}>
-                <Text style={styles.hr}>
-                  _______________________________________________________
-                </Text>
-              </View>
-              <View style={styles.subText}>
-                <Text style={styles.label}>Availabilty: </Text>
-                <View style={styles.box1}>
-                  <Text style={styles.boxText1}>Available</Text>
+                <View style={styles.hrContainer}>
+                  <Text style={styles.hr}>
+                    _______________________________________________________
+                  </Text>
                 </View>
-              </View>
-            </Pressable>
-          </Link>
 
-          {/*White*/}
-          <Link href="/Regular/White/FloorA" asChild>
-            <Pressable style={styles.card}>
-              <Text style={styles.houseEmoji}>🏠</Text>
-              <Text style={styles.name}>White Hall</Text>
-              <View style={styles.box}>
-                <Text style={styles.boxText}>Regular</Text>
-              </View>
-              <View style={styles.hrContainer}>
-                <Text style={styles.hr}>
-                  _______________________________________________________
-                </Text>
-              </View>
-              <View style={styles.subText}>
-                <Text style={styles.label}>Capacity: </Text>
-                <Text style={styles.value}>6 students/room</Text>
-              </View>
-              <View style={styles.subText}>
-                <Text style={styles.label}>Gender: </Text>
-                <Text style={styles.value}>Female</Text>
-              </View>
-              <View style={styles.subText}>
-                <Ionicons name="location" size={16} color="#585757" />
-                <Text style={styles.value}> Main Campus </Text>
-              </View>
-              <View style={styles.hrContainer}>
-                <Text style={styles.hr}>
-                  _______________________________________________________
-                </Text>
-              </View>
-              <View style={styles.subText}>
-                <Text style={styles.label}>Availabilty: </Text>
-                <View style={styles.box1}>
-                  <Text style={styles.boxText1}>Available</Text>
+                <View style={styles.subText}>
+                  <Text style={styles.label}>Capacity: </Text>
+                  <Text style={styles.value}>6 students/room</Text>
                 </View>
-              </View>
+                <View style={styles.subText}>
+                  <Text style={styles.label}>Gender: </Text>
+                  <Text style={styles.value}>Female</Text>
+                </View>
+                <View style={styles.subText}>
+                  <Ionicons name="location" size={16} color="#585757" />
+                  <Text style={styles.value}> Main Campus </Text>
+                </View>
+                <View style={styles.hrContainer}>
+                  <Text style={styles.hr}>
+                    _______________________________________________________
+                  </Text>
+                </View>
+                <View style={styles.subText}>
+                  <Text style={styles.label}>Availabilty: </Text>
+                  <View style={styles.box1}>
+                    <Text style={styles.boxText1}>Available</Text>
+                  </View>
+                </View>
+              </Pressable>
+            </Link>
+
+            {/*Ogden*/}
+            <Link href="/Regular/Ogden/FloorA" asChild>
+              <Pressable style={styles.card}>
+                <Text style={styles.houseEmoji}>🏠</Text>
+                <Text style={styles.name}>Ogden Hall</Text>
+                <View style={styles.box}>
+                  <Text style={styles.boxText}>Regular</Text>
+                </View>
+
+                <View style={styles.hrContainer}>
+                  <Text style={styles.hr}>
+                    _______________________________________________________
+                  </Text>
+                </View>
+                <View style={styles.subText}>
+                  <Text style={styles.label}>Capacity: </Text>
+                  <Text style={styles.value}>6 students/room</Text>
+                </View>
+                <View style={styles.subText}>
+                  <Text style={styles.label}>Gender: </Text>
+                  <Text style={styles.value}>Female</Text>
+                </View>
+                <View style={styles.subText}>
+                  <Ionicons name="location" size={16} color="#585757" />
+                  <Text style={styles.value}> Main Campus </Text>
+                </View>
+                <View style={styles.hrContainer}>
+                  <Text style={styles.hr}>
+                    _______________________________________________________
+                  </Text>
+                </View>
+                <View style={styles.subText}>
+                  <Text style={styles.label}>Availabilty: </Text>
+                  <View style={styles.box1}>
+                    <Text style={styles.boxText1}>Available</Text>
+                  </View>
+                </View>
+              </Pressable>
+            </Link>
+
+            {/*White*/}
+            <Link href="/Regular/White/FloorA" asChild>
+              <Pressable style={styles.card}>
+                <Text style={styles.houseEmoji}>🏠</Text>
+                <Text style={styles.name}>White Hall</Text>
+                <View style={styles.box}>
+                  <Text style={styles.boxText}>Regular</Text>
+                </View>
+                <View style={styles.hrContainer}>
+                  <Text style={styles.hr}>
+                    _______________________________________________________
+                  </Text>
+                </View>
+                <View style={styles.subText}>
+                  <Text style={styles.label}>Capacity: </Text>
+                  <Text style={styles.value}>6 students/room</Text>
+                </View>
+                <View style={styles.subText}>
+                  <Text style={styles.label}>Gender: </Text>
+                  <Text style={styles.value}>Female</Text>
+                </View>
+                <View style={styles.subText}>
+                  <Ionicons name="location" size={16} color="#585757" />
+                  <Text style={styles.value}> Main Campus </Text>
+                </View>
+                <View style={styles.hrContainer}>
+                  <Text style={styles.hr}>
+                    _______________________________________________________
+                  </Text>
+                </View>
+                <View style={styles.subText}>
+                  <Text style={styles.label}>Availabilty: </Text>
+                  <View style={styles.box1}>
+                    <Text style={styles.boxText1}>Available</Text>
+                  </View>
+                </View>
+              </Pressable>
+            </Link>
+          </View>
+          {/*Button */}
+          <Link href="/hostelType" asChild>
+            <Pressable style={styles.button}>
+              <Text>
+                <Ionicons name="arrow-back" size={20} color="#020208" /> Back
+              </Text>
             </Pressable>
           </Link>
         </View>
-        {/*Button */}
-        <Link href="/hostelType" asChild>
-          <Pressable style={styles.button}>
-            <Text>
-              <Ionicons name="arrow-back" size={20} color="#020208" /> Back
-            </Text>
-          </Pressable>
-        </Link>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

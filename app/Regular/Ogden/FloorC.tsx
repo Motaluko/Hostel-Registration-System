@@ -2,13 +2,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { Link, type Href } from "expo-router";
 import React, { useState } from "react";
 import {
-    Pressable,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
-    useWindowDimensions,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  useWindowDimensions,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type Room = {
   number: string;
@@ -84,174 +85,176 @@ export default function HostelType() {
     : null;
 
   return (
-    <ScrollView style={styles.body}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Select Your Room</Text>
-        <Text style={styles.headerSubtitle}>
-          Ogden Hall - 6 students per room
-        </Text>
-      </View>
+    <SafeAreaView>
+      <ScrollView style={styles.body}>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Select Your Room</Text>
+          <Text style={styles.headerSubtitle}>
+            Ogden Hall - 6 students per room
+          </Text>
+        </View>
 
-      {/* Select Floor */}
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Select Floor</Text>
+        {/* Select Floor */}
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Select Floor</Text>
 
-        <View style={[styles.floorRow, isSmallScreen && { gap: 12 }]}>
-          {["A", "B", "C", "D"].map((floor) => (
-            <Link
-              key={floor}
-              href={`/Regular/Ogden/Floor${floor}` as Href}
-              asChild
-            >
-              <Pressable
-                style={{
-                  ...styles.floorButton,
-                  ...(selectedFloor === floor && styles.floorButtonSelected),
-                }}
-                onPress={() => setSelectedFloor(floor)}
+          <View style={[styles.floorRow, isSmallScreen && { gap: 12 }]}>
+            {["A", "B", "C", "D"].map((floor) => (
+              <Link
+                key={floor}
+                href={`/Regular/Ogden/Floor${floor}` as Href}
+                asChild
               >
-                <Text
+                <Pressable
                   style={{
-                    ...styles.floorButtonText,
-                    ...(selectedFloor === floor &&
-                      styles.floorButtonTextSelected),
+                    ...styles.floorButton,
+                    ...(selectedFloor === floor && styles.floorButtonSelected),
                   }}
+                  onPress={() => setSelectedFloor(floor)}
                 >
-                  Floor {floor}
-                </Text>
-              </Pressable>
-            </Link>
-          ))}
-        </View>
-      </View>
-
-      {/* Room Availability Legend */}
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Room Availability</Text>
-        <View style={styles.colorCode}>
-          <View style={styles.legendItem}>
-            <Ionicons name="square" size={16} color="#05b339" />
-            <Text style={styles.legendText}> Available (Empty)</Text>
-          </View>
-          <View style={styles.legendItem}>
-            <Ionicons name="square" size={16} color="#f5b800" />
-            <Text style={styles.legendText}> Partially Full</Text>
-          </View>
-          <View style={styles.legendItem}>
-            <Ionicons name="square" size={16} color="#9b9797" />
-            <Text style={styles.legendText}> Full</Text>
+                  <Text
+                    style={{
+                      ...styles.floorButtonText,
+                      ...(selectedFloor === floor &&
+                        styles.floorButtonTextSelected),
+                    }}
+                  >
+                    Floor {floor}
+                  </Text>
+                </Pressable>
+              </Link>
+            ))}
           </View>
         </View>
-      </View>
 
-      {/* Floor A Rooms */}
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Floor C- Rooms (1-30)</Text>
-
-        <View style={styles.roomsGrid}>
-          {Array.from({ length: 30 }, (_, i) => {
-            const num = (i + 1).toString();
-            const occ = occupancies[num] || "0/6";
-            const status = getStatus(occ);
-
-            return (
-              <Pressable
-                key={num}
-                style={[
-                  styles.roomBox,
-                  getRoomBoxStyle(status),
-                  selectedRoomNumber === num && styles.roomBoxSelected,
-                ]}
-                onPress={() => handleRoomPress(num)}
-              >
-                <Text style={styles.roomNumber}>{num}</Text>
-                <View style={styles.occupancyRow}>
-                  <Ionicons name="people-outline" size={16} color="white" />
-                  <Text style={styles.occupancyText}>{occ}</Text>
-                </View>
-              </Pressable>
-            );
-          })}
+        {/* Room Availability Legend */}
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Room Availability</Text>
+          <View style={styles.colorCode}>
+            <View style={styles.legendItem}>
+              <Ionicons name="square" size={16} color="#05b339" />
+              <Text style={styles.legendText}> Available (Empty)</Text>
+            </View>
+            <View style={styles.legendItem}>
+              <Ionicons name="square" size={16} color="#f5b800" />
+              <Text style={styles.legendText}> Partially Full</Text>
+            </View>
+            <View style={styles.legendItem}>
+              <Ionicons name="square" size={16} color="#9b9797" />
+              <Text style={styles.legendText}> Full</Text>
+            </View>
+          </View>
         </View>
-      </View>
 
-      {/* Selected Room Details */}
-      <View style={styles.card}>
-        <Text style={styles.sectionTitle}>Selected Room Details</Text>
+        {/* Floor A Rooms */}
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Floor C- Rooms (1-30)</Text>
 
-        {selectedRoomNumber && selectedOccupancy && selectedStatus ? (
-          <View style={styles.detailsGrid}>
-            <View style={styles.detailItem}>
-              <Text style={styles.detailLabel}>Room Number</Text>
-              <Text style={styles.detailValue}>{selectedRoomNumber}</Text>
-            </View>
+          <View style={styles.roomsGrid}>
+            {Array.from({ length: 30 }, (_, i) => {
+              const num = (i + 1).toString();
+              const occ = occupancies[num] || "0/6";
+              const status = getStatus(occ);
 
-            <View style={styles.detailItem}>
-              <Text style={styles.detailLabel}>Occupancy</Text>
-              <Text style={styles.detailValue}>{selectedOccupancy}</Text>
-            </View>
+              return (
+                <Pressable
+                  key={num}
+                  style={[
+                    styles.roomBox,
+                    getRoomBoxStyle(status),
+                    selectedRoomNumber === num && styles.roomBoxSelected,
+                  ]}
+                  onPress={() => handleRoomPress(num)}
+                >
+                  <Text style={styles.roomNumber}>{num}</Text>
+                  <View style={styles.occupancyRow}>
+                    <Ionicons name="people-outline" size={16} color="white" />
+                    <Text style={styles.occupancyText}>{occ}</Text>
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
 
-            <View style={styles.detailItem}>
-              <Text style={styles.detailLabel}>Floor</Text>
-              <Text style={styles.detailValue}>
-                {selectedFloor ? `Floor ${selectedFloor}` : "Not selected"}
-              </Text>
-            </View>
+        {/* Selected Room Details */}
+        <View style={styles.card}>
+          <Text style={styles.sectionTitle}>Selected Room Details</Text>
 
-            <View style={styles.detailItem}>
-              <Text style={styles.detailLabel}>Status</Text>
-              <View
-                style={{
-                  ...styles.statusBox,
-                  ...(selectedStatus === "empty" && styles.statusAvailable),
-                  ...(selectedStatus === "partial" && styles.statusPartial),
-                  ...(selectedStatus === "full" && styles.statusFull),
-                }}
-              >
-                <Text style={styles.statusBoxText}>
-                  {getStatusText(selectedStatus)}
+          {selectedRoomNumber && selectedOccupancy && selectedStatus ? (
+            <View style={styles.detailsGrid}>
+              <View style={styles.detailItem}>
+                <Text style={styles.detailLabel}>Room Number</Text>
+                <Text style={styles.detailValue}>{selectedRoomNumber}</Text>
+              </View>
+
+              <View style={styles.detailItem}>
+                <Text style={styles.detailLabel}>Occupancy</Text>
+                <Text style={styles.detailValue}>{selectedOccupancy}</Text>
+              </View>
+
+              <View style={styles.detailItem}>
+                <Text style={styles.detailLabel}>Floor</Text>
+                <Text style={styles.detailValue}>
+                  {selectedFloor ? `Floor ${selectedFloor}` : "Not selected"}
                 </Text>
               </View>
+
+              <View style={styles.detailItem}>
+                <Text style={styles.detailLabel}>Status</Text>
+                <View
+                  style={{
+                    ...styles.statusBox,
+                    ...(selectedStatus === "empty" && styles.statusAvailable),
+                    ...(selectedStatus === "partial" && styles.statusPartial),
+                    ...(selectedStatus === "full" && styles.statusFull),
+                  }}
+                >
+                  <Text style={styles.statusBoxText}>
+                    {getStatusText(selectedStatus)}
+                  </Text>
+                </View>
+              </View>
             </View>
-          </View>
-        ) : (
-          <Text style={styles.noSelectionText}>Tap a room to select it</Text>
-        )}
-      </View>
+          ) : (
+            <Text style={styles.noSelectionText}>Tap a room to select it</Text>
+          )}
+        </View>
 
-      {/* Bottom Buttons */}
-      <View style={styles.buttonRow}>
-        <Link href="/regular" asChild>
-          <Pressable
-            style={{
-              ...styles.actionButton,
-              ...styles.backButton,
-            }}
-          >
-            <Ionicons name="arrow-back" size={18} color="#333" />
-            <Text style={styles.backButtonText}> Back</Text>
-          </Pressable>
-        </Link>
+        {/* Bottom Buttons */}
+        <View style={styles.buttonRow}>
+          <Link href="/regular" asChild>
+            <Pressable
+              style={{
+                ...styles.actionButton,
+                ...styles.backButton,
+              }}
+            >
+              <Ionicons name="arrow-back" size={18} color="#333" />
+              <Text style={styles.backButtonText}> Back</Text>
+            </Pressable>
+          </Link>
 
-        <Link href="/CardPayment" asChild>
-          <Pressable
-            style={{
-              ...styles.actionButton,
-              ...styles.nextButton,
-              ...(!selectedRoomNumber && styles.nextButtonDisabled),
-            }}
-            disabled={!selectedRoomNumber}
-          >
-            <Text style={styles.nextButtonText}>
-              Next <Ionicons name="arrow-forward" size={18} color="white" />
-            </Text>
-          </Pressable>
-        </Link>
-      </View>
+          <Link href="/CardPayment" asChild>
+            <Pressable
+              style={{
+                ...styles.actionButton,
+                ...styles.nextButton,
+                ...(!selectedRoomNumber && styles.nextButtonDisabled),
+              }}
+              disabled={!selectedRoomNumber}
+            >
+              <Text style={styles.nextButtonText}>
+                Next <Ionicons name="arrow-forward" size={18} color="white" />
+              </Text>
+            </Pressable>
+          </Link>
+        </View>
 
-      <View style={{ height: 60 }} />
-    </ScrollView>
+        <View style={{ height: 60 }} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
